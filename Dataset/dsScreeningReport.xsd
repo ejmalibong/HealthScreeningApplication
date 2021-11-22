@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsScreeningReport" targetNamespace="http://tempuri.org/dsScreeningReport.xsd" xmlns:mstns="http://tempuri.org/dsScreeningReport.xsd" xmlns="http://tempuri.org/dsScreeningReport.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="1" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="MySettings" AppSettingsPropertyName="LeaveFilingConnectionString1" IsAppSettingsProperty="true" Modifier="Assembly" Name="LeaveFilingConnectionString1 (MySettings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.SickLeaveScreening.My.MySettings.GlobalReference.Default.LeaveFilingConnectionStringRpt" Provider="System.Data.SqlClient" />
+          <Connection AppSettingsObjectName="MySettings" AppSettingsPropertyName="LeaveApplicationConnectionStringRpt" IsAppSettingsProperty="true" Modifier="Assembly" Name="LeaveApplicationConnectionStringRpt (MySettings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.SickLeaveScreening.My.MySettings.GlobalReference.Default.LeaveApplicationConnectionStringRpt" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="VwScreeningTableAdapter" GeneratorDataComponentClassName="VwScreeningTableAdapter" Name="VwScreening" UserDataComponentName="VwScreeningTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="LeaveApplicationConnectionStringRpt (MySettings)" DbObjectName="LeaveFiling.dbo.VwScreening" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT ScreenId, ScreenDate, ScreenBy, EmployeeId, EmployeeCode, EmployeeName, AbsentFrom, AbsentTo, Quantity, LeaveTypeId, LeaveTypeName, Reason, Diagnosis, IsFitToWork, IsUsed, ModifiedBy, ModifiedDate FROM dbo.VwScreening</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="ScreenId" DataSetColumn="ScreenId" />
+              <Mapping SourceColumn="ScreenDate" DataSetColumn="ScreenDate" />
+              <Mapping SourceColumn="ScreenBy" DataSetColumn="ScreenBy" />
+              <Mapping SourceColumn="EmployeeId" DataSetColumn="EmployeeId" />
+              <Mapping SourceColumn="EmployeeCode" DataSetColumn="EmployeeCode" />
+              <Mapping SourceColumn="EmployeeName" DataSetColumn="EmployeeName" />
+              <Mapping SourceColumn="AbsentFrom" DataSetColumn="AbsentFrom" />
+              <Mapping SourceColumn="AbsentTo" DataSetColumn="AbsentTo" />
+              <Mapping SourceColumn="Quantity" DataSetColumn="Quantity" />
+              <Mapping SourceColumn="LeaveTypeId" DataSetColumn="LeaveTypeId" />
+              <Mapping SourceColumn="LeaveTypeName" DataSetColumn="LeaveTypeName" />
+              <Mapping SourceColumn="Reason" DataSetColumn="Reason" />
+              <Mapping SourceColumn="Diagnosis" DataSetColumn="Diagnosis" />
+              <Mapping SourceColumn="IsFitToWork" DataSetColumn="IsFitToWork" />
+              <Mapping SourceColumn="IsUsed" DataSetColumn="IsUsed" />
+              <Mapping SourceColumn="ModifiedBy" DataSetColumn="ModifiedBy" />
+              <Mapping SourceColumn="ModifiedDate" DataSetColumn="ModifiedDate" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsScreeningReport" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsScreeningReport" msprop:Generator_UserDSName="dsScreeningReport">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="VwScreening" msprop:Generator_TableClassName="VwScreeningDataTable" msprop:Generator_TableVarName="tableVwScreening" msprop:Generator_RowChangedName="VwScreeningRowChanged" msprop:Generator_TablePropName="VwScreening" msprop:Generator_RowDeletingName="VwScreeningRowDeleting" msprop:Generator_RowChangingName="VwScreeningRowChanging" msprop:Generator_RowEvHandlerName="VwScreeningRowChangeEventHandler" msprop:Generator_RowDeletedName="VwScreeningRowDeleted" msprop:Generator_RowClassName="VwScreeningRow" msprop:Generator_UserTableName="VwScreening" msprop:Generator_RowEvArgName="VwScreeningRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ScreenId" msprop:Generator_ColumnVarNameInTable="columnScreenId" msprop:Generator_ColumnPropNameInRow="ScreenId" msprop:Generator_ColumnPropNameInTable="ScreenIdColumn" msprop:Generator_UserColumnName="ScreenId" type="xs:int" />
+              <xs:element name="ScreenDate" msprop:Generator_ColumnVarNameInTable="columnScreenDate" msprop:Generator_ColumnPropNameInRow="ScreenDate" msprop:Generator_ColumnPropNameInTable="ScreenDateColumn" msprop:Generator_UserColumnName="ScreenDate" type="xs:dateTime" />
+              <xs:element name="ScreenBy" msprop:Generator_ColumnVarNameInTable="columnScreenBy" msprop:Generator_ColumnPropNameInRow="ScreenBy" msprop:Generator_ColumnPropNameInTable="ScreenByColumn" msprop:Generator_UserColumnName="ScreenBy">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EmployeeId" msprop:Generator_ColumnVarNameInTable="columnEmployeeId" msprop:Generator_ColumnPropNameInRow="EmployeeId" msprop:Generator_ColumnPropNameInTable="EmployeeIdColumn" msprop:Generator_UserColumnName="EmployeeId" type="xs:int" minOccurs="0" />
+              <xs:element name="EmployeeCode" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnEmployeeCode" msprop:Generator_ColumnPropNameInRow="EmployeeCode" msprop:Generator_ColumnPropNameInTable="EmployeeCodeColumn" msprop:Generator_UserColumnName="EmployeeCode" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EmployeeName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnEmployeeName" msprop:Generator_ColumnPropNameInRow="EmployeeName" msprop:Generator_ColumnPropNameInTable="EmployeeNameColumn" msprop:Generator_UserColumnName="EmployeeName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AbsentFrom" msprop:Generator_ColumnVarNameInTable="columnAbsentFrom" msprop:Generator_ColumnPropNameInRow="AbsentFrom" msprop:Generator_ColumnPropNameInTable="AbsentFromColumn" msprop:Generator_UserColumnName="AbsentFrom" type="xs:dateTime" />
+              <xs:element name="AbsentTo" msprop:Generator_ColumnVarNameInTable="columnAbsentTo" msprop:Generator_ColumnPropNameInRow="AbsentTo" msprop:Generator_ColumnPropNameInTable="AbsentToColumn" msprop:Generator_UserColumnName="AbsentTo" type="xs:dateTime" />
+              <xs:element name="Quantity" msprop:Generator_ColumnVarNameInTable="columnQuantity" msprop:Generator_ColumnPropNameInRow="Quantity" msprop:Generator_ColumnPropNameInTable="QuantityColumn" msprop:Generator_UserColumnName="Quantity" type="xs:int" />
+              <xs:element name="LeaveTypeId" msprop:Generator_ColumnVarNameInTable="columnLeaveTypeId" msprop:Generator_ColumnPropNameInRow="LeaveTypeId" msprop:Generator_ColumnPropNameInTable="LeaveTypeIdColumn" msprop:Generator_UserColumnName="LeaveTypeId" type="xs:int" />
+              <xs:element name="LeaveTypeName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnLeaveTypeName" msprop:Generator_ColumnPropNameInRow="LeaveTypeName" msprop:Generator_ColumnPropNameInTable="LeaveTypeNameColumn" msprop:Generator_UserColumnName="LeaveTypeName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Reason" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnReason" msprop:Generator_ColumnPropNameInRow="Reason" msprop:Generator_ColumnPropNameInTable="ReasonColumn" msprop:Generator_UserColumnName="Reason" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Diagnosis" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDiagnosis" msprop:Generator_ColumnPropNameInRow="Diagnosis" msprop:Generator_ColumnPropNameInTable="DiagnosisColumn" msprop:Generator_UserColumnName="Diagnosis" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IsFitToWork" msprop:Generator_ColumnVarNameInTable="columnIsFitToWork" msprop:Generator_ColumnPropNameInRow="IsFitToWork" msprop:Generator_ColumnPropNameInTable="IsFitToWorkColumn" msprop:Generator_UserColumnName="IsFitToWork" type="xs:boolean" />
+              <xs:element name="IsUsed" msprop:Generator_ColumnVarNameInTable="columnIsUsed" msprop:Generator_ColumnPropNameInRow="IsUsed" msprop:Generator_ColumnPropNameInTable="IsUsedColumn" msprop:Generator_UserColumnName="IsUsed" type="xs:boolean" />
+              <xs:element name="ModifiedBy" msprop:Generator_ColumnVarNameInTable="columnModifiedBy" msprop:Generator_ColumnPropNameInRow="ModifiedBy" msprop:Generator_ColumnPropNameInTable="ModifiedByColumn" msprop:Generator_UserColumnName="ModifiedBy">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ModifiedDate" msprop:Generator_ColumnVarNameInTable="columnModifiedDate" msprop:Generator_ColumnPropNameInRow="ModifiedDate" msprop:Generator_ColumnPropNameInTable="ModifiedDateColumn" msprop:Generator_UserColumnName="ModifiedDate" type="xs:dateTime" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:VwScreening" />
+      <xs:field xpath="mstns:ScreenId" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>
