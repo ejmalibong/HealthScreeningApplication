@@ -27,6 +27,9 @@ Partial Class frmScreenList
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pnlTop = New System.Windows.Forms.Panel()
         Me.txtUsername = New System.Windows.Forms.Label()
         Me.btnSearch = New PinkieControls.ButtonXP()
@@ -60,15 +63,6 @@ Partial Class frmScreenList
         Me.btnDelete = New PinkieControls.ButtonXP()
         Me.btnEdit = New PinkieControls.ButtonXP()
         Me.dgvList = New System.Windows.Forms.DataGridView()
-        Me.ColScreenId = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ColScreenDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ColEmployeeName = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ColReason = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ColDiagnosis = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ColLeaveTypeId = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ColLeaveTypeName = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ColsFitToWork = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-        Me.ColScreenByName = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.pnlEmployeeName = New System.Windows.Forms.Panel()
         Me.txtEmployeeName = New System.Windows.Forms.TextBox()
         Me.pnlAbsentDate = New System.Windows.Forms.Panel()
@@ -80,6 +74,17 @@ Partial Class frmScreenList
         Me.txtReason = New System.Windows.Forms.TextBox()
         Me.pnlDiagnosis = New System.Windows.Forms.Panel()
         Me.txtDiagnosis = New System.Windows.Forms.TextBox()
+        Me.ColScreenId = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ColScreenDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ColEmployeeName = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ColReason = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ColDiagnosis = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ColLeaveTypeId = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ColAbsentFrom = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ColAbsentTo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ColQuantity = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ColLeaveTypeName = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ColsFitToWork = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.pnlTop.SuspendLayout()
         Me.pnlScreenDate.SuspendLayout()
         CType(Me.bindingNavigator, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -284,6 +289,7 @@ Partial Class frmScreenList
         '
         Me.txtPageNumber.AccessibleName = "Position"
         Me.txtPageNumber.AutoSize = False
+        Me.txtPageNumber.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.txtPageNumber.Name = "txtPageNumber"
         Me.txtPageNumber.Size = New System.Drawing.Size(30, 23)
         Me.txtPageNumber.Text = "0"
@@ -364,7 +370,7 @@ Partial Class frmScreenList
         Me.btnLogOut.DefaultScheme = False
         Me.btnLogOut.DialogResult = System.Windows.Forms.DialogResult.None
         Me.btnLogOut.Font = New System.Drawing.Font("Verdana", 9.0!)
-        Me.btnLogOut.Hint = "Log out"
+        Me.btnLogOut.Hint = "Log out the application"
         Me.btnLogOut.Location = New System.Drawing.Point(366, 4)
         Me.btnLogOut.Name = "btnLogOut"
         Me.btnLogOut.Scheme = PinkieControls.ButtonXP.Schemes.Blue
@@ -379,7 +385,7 @@ Partial Class frmScreenList
         Me.btnDoctor.DefaultScheme = False
         Me.btnDoctor.DialogResult = System.Windows.Forms.DialogResult.None
         Me.btnDoctor.Font = New System.Drawing.Font("Verdana", 9.0!)
-        Me.btnDoctor.Hint = "Users"
+        Me.btnDoctor.Hint = "Doctor masterlist"
         Me.btnDoctor.Image = Global.SickLeaveScreening.My.Resources.Resources.People_24_x_24
         Me.btnDoctor.Location = New System.Drawing.Point(252, 4)
         Me.btnDoctor.Name = "btnDoctor"
@@ -395,7 +401,7 @@ Partial Class frmScreenList
         Me.btnReport.DefaultScheme = False
         Me.btnReport.DialogResult = System.Windows.Forms.DialogResult.None
         Me.btnReport.Font = New System.Drawing.Font("Verdana", 9.0!)
-        Me.btnReport.Hint = "Report"
+        Me.btnReport.Hint = "Show monitoring report"
         Me.btnReport.Image = Global.SickLeaveScreening.My.Resources.Resources.Report_24_x_24
         Me.btnReport.Location = New System.Drawing.Point(138, 4)
         Me.btnReport.Name = "btnReport"
@@ -411,7 +417,7 @@ Partial Class frmScreenList
         Me.btnRefresh.DefaultScheme = False
         Me.btnRefresh.DialogResult = System.Windows.Forms.DialogResult.None
         Me.btnRefresh.Font = New System.Drawing.Font("Verdana", 9.0!)
-        Me.btnRefresh.Hint = "Refresh"
+        Me.btnRefresh.Hint = "Refresh the list"
         Me.btnRefresh.Image = Global.SickLeaveScreening.My.Resources.Resources.Refresh_16_x_16
         Me.btnRefresh.Location = New System.Drawing.Point(4, 4)
         Me.btnRefresh.Name = "btnRefresh"
@@ -428,7 +434,7 @@ Partial Class frmScreenList
         Me.btnClose.DefaultScheme = False
         Me.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.btnClose.Font = New System.Drawing.Font("Verdana", 9.0!)
-        Me.btnClose.Hint = "Exit application"
+        Me.btnClose.Hint = "Exit the application"
         Me.btnClose.Location = New System.Drawing.Point(1183, 4)
         Me.btnClose.Name = "btnClose"
         Me.btnClose.Scheme = PinkieControls.ButtonXP.Schemes.Blue
@@ -452,7 +458,7 @@ Partial Class frmScreenList
         Me.btnAdd.Size = New System.Drawing.Size(110, 36)
         Me.btnAdd.TabIndex = 156
         Me.btnAdd.TabStop = False
-        Me.btnAdd.Text = "Add (F2)"
+        Me.btnAdd.Text = " Add (F2)"
         '
         'btnDelete
         '
@@ -478,7 +484,7 @@ Partial Class frmScreenList
         Me.btnEdit.DefaultScheme = False
         Me.btnEdit.DialogResult = System.Windows.Forms.DialogResult.None
         Me.btnEdit.Font = New System.Drawing.Font("Verdana", 9.0!)
-        Me.btnEdit.Hint = "Modify record"
+        Me.btnEdit.Hint = "Modify selected record"
         Me.btnEdit.Image = Global.SickLeaveScreening.My.Resources.Resources.Modify_16_x_16
         Me.btnEdit.Location = New System.Drawing.Point(955, 4)
         Me.btnEdit.Name = "btnEdit"
@@ -486,7 +492,7 @@ Partial Class frmScreenList
         Me.btnEdit.Size = New System.Drawing.Size(110, 36)
         Me.btnEdit.TabIndex = 157
         Me.btnEdit.TabStop = False
-        Me.btnEdit.Text = "Edit (F3)"
+        Me.btnEdit.Text = " Edit (F3)"
         '
         'dgvList
         '
@@ -504,7 +510,7 @@ Partial Class frmScreenList
         Me.dgvList.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.dgvList.ColumnHeadersHeight = 25
         Me.dgvList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
-        Me.dgvList.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ColScreenId, Me.ColScreenDate, Me.ColEmployeeName, Me.ColReason, Me.ColDiagnosis, Me.ColLeaveTypeId, Me.ColLeaveTypeName, Me.ColsFitToWork, Me.ColScreenByName})
+        Me.dgvList.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ColScreenId, Me.ColScreenDate, Me.ColEmployeeName, Me.ColReason, Me.ColDiagnosis, Me.ColLeaveTypeId, Me.ColAbsentFrom, Me.ColAbsentTo, Me.ColQuantity, Me.ColLeaveTypeName, Me.ColsFitToWork})
         Me.dgvList.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgvList.Location = New System.Drawing.Point(0, 36)
         Me.dgvList.MultiSelect = False
@@ -517,82 +523,6 @@ Partial Class frmScreenList
         Me.dgvList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgvList.Size = New System.Drawing.Size(1300, 618)
         Me.dgvList.TabIndex = 2
-        '
-        'ColScreenId
-        '
-        Me.ColScreenId.DataPropertyName = "ScreenId"
-        Me.ColScreenId.HeaderText = "ScreenId"
-        Me.ColScreenId.Name = "ColScreenId"
-        Me.ColScreenId.ReadOnly = True
-        Me.ColScreenId.Visible = False
-        '
-        'ColScreenDate
-        '
-        Me.ColScreenDate.DataPropertyName = "ScreenDate"
-        Me.ColScreenDate.HeaderText = "Date"
-        Me.ColScreenDate.Name = "ColScreenDate"
-        Me.ColScreenDate.ReadOnly = True
-        Me.ColScreenDate.Width = 140
-        '
-        'ColEmployeeName
-        '
-        Me.ColEmployeeName.DataPropertyName = "EmployeeName"
-        Me.ColEmployeeName.HeaderText = "Employee Name"
-        Me.ColEmployeeName.Name = "ColEmployeeName"
-        Me.ColEmployeeName.ReadOnly = True
-        Me.ColEmployeeName.Width = 250
-        '
-        'ColReason
-        '
-        Me.ColReason.DataPropertyName = "Reason"
-        Me.ColReason.HeaderText = "Reason / Chief Complaint"
-        Me.ColReason.Name = "ColReason"
-        Me.ColReason.ReadOnly = True
-        Me.ColReason.Width = 250
-        '
-        'ColDiagnosis
-        '
-        Me.ColDiagnosis.DataPropertyName = "Diagnosis"
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        Me.ColDiagnosis.DefaultCellStyle = DataGridViewCellStyle2
-        Me.ColDiagnosis.HeaderText = "Diagnosis"
-        Me.ColDiagnosis.Name = "ColDiagnosis"
-        Me.ColDiagnosis.ReadOnly = True
-        Me.ColDiagnosis.Width = 215
-        '
-        'ColLeaveTypeId
-        '
-        Me.ColLeaveTypeId.DataPropertyName = "LeaveTypeId"
-        Me.ColLeaveTypeId.HeaderText = "LeaveTypeId"
-        Me.ColLeaveTypeId.Name = "ColLeaveTypeId"
-        Me.ColLeaveTypeId.ReadOnly = True
-        Me.ColLeaveTypeId.Visible = False
-        '
-        'ColLeaveTypeName
-        '
-        Me.ColLeaveTypeName.DataPropertyName = "LeaveTypeCode"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.ColLeaveTypeName.DefaultCellStyle = DataGridViewCellStyle3
-        Me.ColLeaveTypeName.HeaderText = "Leave Type"
-        Me.ColLeaveTypeName.Name = "ColLeaveTypeName"
-        Me.ColLeaveTypeName.ReadOnly = True
-        Me.ColLeaveTypeName.Width = 90
-        '
-        'ColsFitToWork
-        '
-        Me.ColsFitToWork.DataPropertyName = "IsFitToWork"
-        Me.ColsFitToWork.HeaderText = "Fit To Work"
-        Me.ColsFitToWork.Name = "ColsFitToWork"
-        Me.ColsFitToWork.ReadOnly = True
-        Me.ColsFitToWork.Width = 90
-        '
-        'ColScreenByName
-        '
-        Me.ColScreenByName.DataPropertyName = "ScreenByName"
-        Me.ColScreenByName.HeaderText = "Encoded By"
-        Me.ColScreenByName.Name = "ColScreenByName"
-        Me.ColScreenByName.ReadOnly = True
-        Me.ColScreenByName.Width = 180
         '
         'pnlEmployeeName
         '
@@ -700,6 +630,107 @@ Partial Class frmScreenList
         Me.txtDiagnosis.Size = New System.Drawing.Size(333, 22)
         Me.txtDiagnosis.TabIndex = 0
         '
+        'ColScreenId
+        '
+        Me.ColScreenId.DataPropertyName = "ScreenId"
+        Me.ColScreenId.HeaderText = "ScreenId"
+        Me.ColScreenId.Name = "ColScreenId"
+        Me.ColScreenId.ReadOnly = True
+        Me.ColScreenId.Visible = False
+        '
+        'ColScreenDate
+        '
+        Me.ColScreenDate.DataPropertyName = "ScreenDate"
+        Me.ColScreenDate.HeaderText = "Creation Date"
+        Me.ColScreenDate.Name = "ColScreenDate"
+        Me.ColScreenDate.ReadOnly = True
+        Me.ColScreenDate.Width = 140
+        '
+        'ColEmployeeName
+        '
+        Me.ColEmployeeName.DataPropertyName = "EmployeeName"
+        Me.ColEmployeeName.HeaderText = "Employee Name"
+        Me.ColEmployeeName.Name = "ColEmployeeName"
+        Me.ColEmployeeName.ReadOnly = True
+        Me.ColEmployeeName.Width = 250
+        '
+        'ColReason
+        '
+        Me.ColReason.DataPropertyName = "Reason"
+        Me.ColReason.HeaderText = "Reason / Chief Complaint"
+        Me.ColReason.Name = "ColReason"
+        Me.ColReason.ReadOnly = True
+        Me.ColReason.Width = 250
+        '
+        'ColDiagnosis
+        '
+        Me.ColDiagnosis.DataPropertyName = "Diagnosis"
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        Me.ColDiagnosis.DefaultCellStyle = DataGridViewCellStyle2
+        Me.ColDiagnosis.HeaderText = "Diagnosis"
+        Me.ColDiagnosis.Name = "ColDiagnosis"
+        Me.ColDiagnosis.ReadOnly = True
+        Me.ColDiagnosis.Width = 215
+        '
+        'ColLeaveTypeId
+        '
+        Me.ColLeaveTypeId.DataPropertyName = "LeaveTypeId"
+        Me.ColLeaveTypeId.HeaderText = "LeaveTypeId"
+        Me.ColLeaveTypeId.Name = "ColLeaveTypeId"
+        Me.ColLeaveTypeId.ReadOnly = True
+        Me.ColLeaveTypeId.Visible = False
+        '
+        'ColAbsentFrom
+        '
+        Me.ColAbsentFrom.DataPropertyName = "AbsentFrom"
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.Format = "MM/dd/yyyy"
+        DataGridViewCellStyle3.NullValue = Nothing
+        Me.ColAbsentFrom.DefaultCellStyle = DataGridViewCellStyle3
+        Me.ColAbsentFrom.HeaderText = "From"
+        Me.ColAbsentFrom.Name = "ColAbsentFrom"
+        Me.ColAbsentFrom.ReadOnly = True
+        Me.ColAbsentFrom.Width = 110
+        '
+        'ColAbsentTo
+        '
+        Me.ColAbsentTo.DataPropertyName = "AbsentTo"
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle4.Format = "MM/dd/yyyy"
+        Me.ColAbsentTo.DefaultCellStyle = DataGridViewCellStyle4
+        Me.ColAbsentTo.HeaderText = "To"
+        Me.ColAbsentTo.Name = "ColAbsentTo"
+        Me.ColAbsentTo.ReadOnly = True
+        Me.ColAbsentTo.Width = 110
+        '
+        'ColQuantity
+        '
+        Me.ColQuantity.DataPropertyName = "Quantity"
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.ColQuantity.DefaultCellStyle = DataGridViewCellStyle5
+        Me.ColQuantity.HeaderText = "QTY"
+        Me.ColQuantity.Name = "ColQuantity"
+        Me.ColQuantity.ReadOnly = True
+        Me.ColQuantity.Width = 50
+        '
+        'ColLeaveTypeName
+        '
+        Me.ColLeaveTypeName.DataPropertyName = "LeaveTypeCode"
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.ColLeaveTypeName.DefaultCellStyle = DataGridViewCellStyle6
+        Me.ColLeaveTypeName.HeaderText = "Type"
+        Me.ColLeaveTypeName.Name = "ColLeaveTypeName"
+        Me.ColLeaveTypeName.ReadOnly = True
+        Me.ColLeaveTypeName.Width = 80
+        '
+        'ColsFitToWork
+        '
+        Me.ColsFitToWork.DataPropertyName = "IsFitToWork"
+        Me.ColsFitToWork.HeaderText = "FTW"
+        Me.ColsFitToWork.Name = "ColsFitToWork"
+        Me.ColsFitToWork.ReadOnly = True
+        Me.ColsFitToWork.Width = 50
+        '
         'frmScreenList
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -783,18 +814,20 @@ Partial Class frmScreenList
     Friend WithEvents txtReason As System.Windows.Forms.TextBox
     Friend WithEvents pnlDiagnosis As System.Windows.Forms.Panel
     Friend WithEvents txtDiagnosis As System.Windows.Forms.TextBox
-    Friend WithEvents ColScreenId As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents ColScreenDate As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents ColEmployeeName As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents ColReason As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents ColDiagnosis As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents ColLeaveTypeId As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents ColLeaveTypeName As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents ColsFitToWork As System.Windows.Forms.DataGridViewCheckBoxColumn
-    Friend WithEvents ColScreenByName As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents txtUsername As System.Windows.Forms.Label
     Friend WithEvents btnDoctor As PinkieControls.ButtonXP
     Friend WithEvents btnReport As PinkieControls.ButtonXP
     Friend WithEvents btnLogOut As PinkieControls.ButtonXP
     Friend WithEvents lblStatus As System.Windows.Forms.Label
+    Friend WithEvents ColScreenId As DataGridViewTextBoxColumn
+    Friend WithEvents ColScreenDate As DataGridViewTextBoxColumn
+    Friend WithEvents ColEmployeeName As DataGridViewTextBoxColumn
+    Friend WithEvents ColReason As DataGridViewTextBoxColumn
+    Friend WithEvents ColDiagnosis As DataGridViewTextBoxColumn
+    Friend WithEvents ColLeaveTypeId As DataGridViewTextBoxColumn
+    Friend WithEvents ColAbsentFrom As DataGridViewTextBoxColumn
+    Friend WithEvents ColAbsentTo As DataGridViewTextBoxColumn
+    Friend WithEvents ColQuantity As DataGridViewTextBoxColumn
+    Friend WithEvents ColLeaveTypeName As DataGridViewTextBoxColumn
+    Friend WithEvents ColsFitToWork As DataGridViewCheckBoxColumn
 End Class

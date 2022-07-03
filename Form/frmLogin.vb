@@ -1,7 +1,6 @@
-﻿Imports System.Data.SqlClient
-Imports BlackCoffeeLibrary
+﻿Imports BlackCoffeeLibrary
+Imports System.Data.SqlClient
 Imports System.Deployment.Application
-Imports System.Threading
 
 Public Class frmLogin
     Private connection As New clsConnection
@@ -14,14 +13,18 @@ Public Class frmLogin
     Private employeeName As String = String.Empty
     Private positionName As String = String.Empty
 
-    Private Sub Login_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'doc omman
-        txtEmployeeId.Text = "FMB-0451"
-        txtPassword.Text = "1001"
+    Private isDebug As Boolean = SickLeaveScreening.My.Settings.IsDebug
 
-        'mam irene
-        'txtEmployeeId.Text = "1805-003"
-        'txtPassword.Text = "torejas"
+    Private Sub Login_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        If isDebug = True Then
+            'doc omman
+            txtEmployeeId.Text = "FMB-0451"
+            txtPassword.Text = "1001"
+
+            'mam irene
+            'txtEmployeeId.Text = "1805-003"
+            'txtPassword.Text = "torejas"
+        End If
 
         If ApplicationDeployment.IsNetworkDeployed Then
             lblVersion.Text = "ver. " & ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString
@@ -57,48 +60,50 @@ Public Class frmLogin
                 Return
             End If
 
-            Dim _count1 As Integer = 0
-            Dim _prm1(1) As SqlParameter
-            _prm1(0) = New SqlParameter("@EmployeeCode", SqlDbType.NVarChar)
-            _prm1(0).Value = txtEmployeeId.Text.Trim
-            _prm1(1) = New SqlParameter("@Password", SqlDbType.NVarChar)
-            _prm1(1).Value = txtPassword.Text.Trim
+            Dim count1 As Integer = 0
+            Dim prmLogin1(1) As SqlParameter
+            prmLogin1(0) = New SqlParameter("@EmployeeCode", SqlDbType.NVarChar)
+            prmLogin1(0).Value = txtEmployeeId.Text.Trim
+            prmLogin1(1) = New SqlParameter("@Password", SqlDbType.NVarChar)
+            prmLogin1(1).Value = txtPassword.Text.Trim
 
             'check if nbc nurses
             'use latin1 general collation for case-sensitive password
-            _count1 = dbLeaveFiling.ExecuteScalar("SELECT COUNT(EmployeeId) FROM VwClinicNbc WHERE EmployeeCode = @EmployeeCode AND " & _
-                                                  "(TRIM(Password) COLLATE Latin1_General_CS_AS = @Password)", CommandType.Text, _prm1)
+            count1 = dbLeaveFiling.ExecuteScalar("SELECT COUNT(EmployeeId) FROM VwClinicNbc WHERE EmployeeCode = @EmployeeCode AND " &
+                                                 "(TRIM(Password) COLLATE Latin1_General_CS_AS = @Password)", CommandType.Text, prmLogin1)
 
-            If _count1 > 0 Then 'nbc nurses
-                Dim _prm2(1) As SqlParameter
-                _prm2(0) = New SqlParameter("@EmployeeCode", SqlDbType.VarChar)
-                _prm2(0).Value = txtEmployeeId.Text.Trim
-                _prm2(1) = New SqlParameter("@Password", SqlDbType.NVarChar)
-                _prm2(1).Value = txtPassword.Text.Trim
+            If count1 > 0 Then 'nbc nurses
+                Dim prmLogin2(1) As SqlParameter
+                prmLogin2(0) = New SqlParameter("@EmployeeCode", SqlDbType.VarChar)
+                prmLogin2(0).Value = txtEmployeeId.Text.Trim
+                prmLogin2(1) = New SqlParameter("@Password", SqlDbType.NVarChar)
+                prmLogin2(1).Value = txtPassword.Text.Trim
 
-                Dim _reader As IDataReader = dbLeaveFiling.ExecuteReader("RdClinicNbc", CommandType.StoredProcedure, _prm2)
-                GetUserInformation(_reader)
+                Using reader As IDataReader = dbLeaveFiling.ExecuteReader("RdClinicNbc", CommandType.StoredProcedure, prmLogin2)
+                    GetUserInformation(reader)
+                End Using
 
             Else 'non-nbc doctors
-                Dim _count2 As Integer = 0
-                Dim _prm3(1) As SqlParameter
-                _prm3(0) = New SqlParameter("@EmployeeCode", SqlDbType.VarChar)
-                _prm3(0).Value = txtEmployeeId.Text.Trim
-                _prm3(1) = New SqlParameter("@Password", SqlDbType.NVarChar)
-                _prm3(1).Value = txtPassword.Text.Trim
+                Dim count2 As Integer = 0
+                Dim prmLogin3(1) As SqlParameter
+                prmLogin3(0) = New SqlParameter("@EmployeeCode", SqlDbType.VarChar)
+                prmLogin3(0).Value = txtEmployeeId.Text.Trim
+                prmLogin3(1) = New SqlParameter("@Password", SqlDbType.NVarChar)
+                prmLogin3(1).Value = txtPassword.Text.Trim
 
-                _count2 = dbLeaveFiling.ExecuteScalar("SELECT COUNT(EmployeeId) FROM dbo.Clinic WHERE TRIM(EmployeeCode) = @EmployeeCode AND " & _
-                                                      "(TRIM(Password) COLLATE Latin1_General_CS_AS = @Password) AND IsActive = 1", CommandType.Text, _prm3)
+                count2 = dbLeaveFiling.ExecuteScalar("SELECT COUNT(EmployeeId) FROM dbo.Clinic WHERE TRIM(EmployeeCode) = @EmployeeCode AND " &
+                                                     "(TRIM(Password) COLLATE Latin1_General_CS_AS = @Password) AND IsActive = 1", CommandType.Text, prmLogin3)
 
-                If _count2 > 0 Then 'non-nbc doctors
-                    Dim _prm4(1) As SqlParameter
-                    _prm4(0) = New SqlParameter("@EmployeeCode", SqlDbType.VarChar)
-                    _prm4(0).Value = txtEmployeeId.Text.Trim
-                    _prm4(1) = New SqlParameter("@Password", SqlDbType.NVarChar)
-                    _prm4(1).Value = txtPassword.Text.Trim
+                If count2 > 0 Then 'non-nbc doctors
+                    Dim prmLogin4(1) As SqlParameter
+                    prmLogin4(0) = New SqlParameter("@EmployeeCode", SqlDbType.VarChar)
+                    prmLogin4(0).Value = txtEmployeeId.Text.Trim
+                    prmLogin4(1) = New SqlParameter("@Password", SqlDbType.NVarChar)
+                    prmLogin4(1).Value = txtPassword.Text.Trim
 
-                    Dim _reader As IDataReader = dbLeaveFiling.ExecuteReader("RdClinic", CommandType.StoredProcedure, _prm4)
-                    GetUserInformation(_reader)
+                    Using reader As IDataReader = dbLeaveFiling.ExecuteReader("RdClinic", CommandType.StoredProcedure, prmLogin4)
+                        GetUserInformation(reader)
+                    End Using
 
                 Else 'unauthorized login - incorrect credentials or inactive user
                     MessageBox.Show("Incorrect employeee ID or password.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -116,19 +121,19 @@ Public Class frmLogin
 
 #Region "Subroutines"
 
-    Private Sub GetUserInformation(ByVal _reader As IDataReader)
-        While _reader.Read
-            employeeId = _reader.Item("EmployeeId")
-            employeeCode = _reader.Item("EmployeeCode").ToString.Trim
-            employeeName = _reader.Item("EmployeeName").ToString.Trim
-            positionName = _reader.Item("PositionName").ToString.Trim
+    Private Sub GetUserInformation(reader As IDataReader)
+        While reader.Read
+            employeeId = reader.Item("EmployeeId")
+            employeeCode = reader.Item("EmployeeCode").ToString.Trim
+            employeeName = reader.Item("EmployeeName").ToString.Trim
+            positionName = reader.Item("PositionName").ToString.Trim
         End While
-        _reader.Close()
+        reader.Close()
 
         Me.Hide()
 
-        Dim _frmScreenList As New frmScreenList(employeeId, employeeCode, employeeName, positionName)
-        _frmScreenList.Show()
+        Dim frmScreenList As New frmScreenList(employeeId, employeeCode, employeeName, positionName)
+        frmScreenList.Show()
         txtEmployeeId.Clear()
         txtPassword.Clear()
     End Sub

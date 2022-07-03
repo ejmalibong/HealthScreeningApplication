@@ -25,7 +25,7 @@
     <MapFileExtensions>false</MapFileExtensions>
     <ProductName>Health Screening</ProductName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>91</ApplicationRevision>
+    <ApplicationRevision>103</ApplicationRevision>
     <ApplicationVersion>2.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -84,15 +84,21 @@
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BlackCoffeeLibrary">
-      <HintPath>..\..\..\..\Frameworks\BlackCoffeeLibrary.dll</HintPath>
+      <HintPath>..\..\..\..\DLL\BlackCoffeeLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="PinkieControls">
-      <HintPath>..\..\..\..\Frameworks\PinkieControls.dll</HintPath>
+      <HintPath>..\..\..\..\DLL\PinkieControls.dll</HintPath>
+    </Reference>
+    <Reference Include="SergeUtils">
+      <HintPath>..\..\..\..\DLL\SergeUtils.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -126,6 +132,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationEvents.vb" />
     <Compile Include="Class\clsConnection.vb" />
     <Compile Include="Dataset\dsScreeningReport.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -166,6 +173,7 @@
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -232,12 +240,6 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\LeaveApplicationSystem\LeaveApplicationSystem.vbproj">
-      <Project>{3cb635e1-81cb-470a-ac87-a6c70d0d4b04}</Project>
-      <Name>LeaveApplicationSystem</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\16x16\3d bar chart 16 x 16.png" />
@@ -1366,7 +1368,12 @@
   <ItemGroup>
     <None Include="Resources\SlsSysIcon.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\LeaveApplicationSystem\LeaveApplicationSystem.vbproj">
+      <Project>{3cb635e1-81cb-470a-ac87-a6c70d0d4b04}</Project>
+      <Name>LeaveApplicationSystem</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -57,29 +57,33 @@ Namespace My
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=NBCP-LT-043\SQLEXPRESS;Initial Catalog=LeaveFiling;Persist Security I"& _ 
-            "nfo=True;User ID=sa;Password=Nbc12#")>  _
-        Public ReadOnly Property LeaveApplicationConnectionString() As String
+         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=LENOVO-AX3RONG2;Initial Catalog=LeaveFiling;Persist Security Info=Tru"& _ 
+            "e;User ID=sa;Password=Nbc12#")>  _
+        Public ReadOnly Property LeaveConnectionString() As String
             Get
-                Return CType(Me("LeaveApplicationConnectionString"),String)
+                Return CType(Me("LeaveConnectionString"),String)
             End Get
         End Property
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString)>  _
-        Public ReadOnly Property NBCTECHDBConnectionString() As String
+         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=LENOVO-AX3RONG2;Initial Catalog=NBCTECHDB;Persist Security Info=True;"& _ 
+            "User ID=sa;Password=Nbc12#")>  _
+        Public ReadOnly Property JeonsoftConnectionString() As String
             Get
-                Return CType(Me("NBCTECHDBConnectionString"),String)
+                Return CType(Me("JeonsoftConnectionString"),String)
             End Get
         End Property
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString)>  _
-        Public ReadOnly Property LeaveApplicationConnectionStringRpt() As String
+         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=LENOVO-AX3RONG2;Initial Catalog=LeaveFiling;Persist Security Info=Tru"& _ 
+            "e;User ID=sa;Password=Nbc12#")>  _
+        Public ReadOnly Property LeaveConnectionStringRpt() As String
             Get
-                Return CType(Me("LeaveApplicationConnectionStringRpt"),String)
+                Return CType(Me("LeaveConnectionStringRpt"),String)
             End Get
         End Property
         

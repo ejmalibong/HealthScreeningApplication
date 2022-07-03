@@ -84,10 +84,10 @@ GenerateReport:
 
                 If Not cmbEmploymentType.SelectedValue = 0 Then
                     If cmbEmploymentType.SelectedValue = 1 Then
-                        query += " AND EmployeeId IS NOT NULL"
+                        query += " AND EmployeeId <> 0"
                         employeeType = "Direct"
                     ElseIf cmbEmploymentType.SelectedValue = 2 Then
-                        query += " AND EmployeeId IS NULL"
+                        query += " AND EmployeeId = 0"
                         employeeType = "Agency"
                     End If
                 Else

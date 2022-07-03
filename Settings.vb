@@ -10,13 +10,13 @@ Namespace My
 
         Private Sub MySettings_SettingsLoaded(sender As Object, e As System.Configuration.SettingsLoadedEventArgs) Handles Me.SettingsLoaded
             If SickLeaveScreening.My.MySettings.Default.IsDebug = True Then
-                Me.Item("LeaveApplicationConnectionString") = "Data Source=NBCP-LT-058\SQLEXPRESS;Initial Catalog=LeaveFiling;Persist Security Info=True;User ID=sa;Password=Nbc12#"
-                Me.Item("LeaveApplicationConnectionStringRpt") = "Data Source=NBCP-LT-058\SQLEXPRESS;Initial Catalog=LeaveFiling;Persist Security Info=True;User ID=sa;Password=Nbc12#"
-                Me.Item("NBCTECHDBConnectionString") = "Data Source=NBCP-LT-058\SQLEXPRESS;Initial Catalog=NBCTECHDB;Persist Security Info=True;User ID=sa;Password=Nbc12#"
+                Me.Item("LeaveConnectionString") = "Data Source=NBCP-LT-043\SQLEXPRESS;Initial Catalog=LeaveFiling;Persist Security Info=True;User ID=sa;Password=Nbc12#"
+                Me.Item("LeaveConnectionStringRpt") = "Data Source=NBCP-LT-043\SQLEXPRESS;Initial Catalog=LeaveFiling;Persist Security Info=True;User ID=sa;Password=Nbc12#"
+                Me.Item("JeonsoftConnectionString") = "Data Source=NBCP-LT-043\SQLEXPRESS;Initial Catalog=NBCTECHDB;Persist Security Info=True;User ID=sa;Password=Nbc12#"
             Else
-                Me.Item("LeaveApplicationConnectionString") = "Data Source=LENOVO-AX3RONG2;Initial Catalog=LeaveFiling;Persist Security Info=True;User ID=sa;Password=Nbc12#"
-                Me.Item("LeaveApplicationConnectionStringRpt") = "Data Source=LENOVO-AX3RONG2;Initial Catalog=LeaveFiling;Persist Security Info=True;User ID=sa;Password=Nbc12#"
-                Me.Item("NBCTECHDBConnectionString") = "Data Source=LENOVO-AX3RONG2;Initial Catalog=NBCTECHDB;Persist Security Info=True;User ID=sa;Password=Nbc12#"
+                Me.Item("LeaveConnectionString") = "Data Source=LENOVO-AX3RONG2;Initial Catalog=LeaveFiling;Persist Security Info=True;User ID=sa;Password=Nbc12#"
+                Me.Item("LeaveConnectionStringRpt") = "Data Source=LENOVO-AX3RONG2;Initial Catalog=LeaveFiling;Persist Security Info=True;User ID=sa;Password=Nbc12#"
+                Me.Item("JeonsoftConnectionString") = "Data Source=LENOVO-AX3RONG2;Initial Catalog=NBCTECHDB;Persist Security Info=True;User ID=sa;Password=Nbc12#"
             End If
         End Sub
 

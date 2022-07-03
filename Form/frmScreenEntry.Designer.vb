@@ -47,6 +47,8 @@ Partial Class frmScreenEntry
         Me.lblClinicClearance = New System.Windows.Forms.Label()
         Me.lblLeaveType = New System.Windows.Forms.Label()
         Me.cmbLeaveType = New System.Windows.Forms.ComboBox()
+        Me.lblTotalDays = New System.Windows.Forms.Label()
+        Me.txtTotalDays = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'txtEmployeeScanId
@@ -55,6 +57,7 @@ Partial Class frmScreenEntry
         Me.txtEmployeeScanId.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtEmployeeScanId.Font = New System.Drawing.Font("Verdana", 30.0!)
         Me.txtEmployeeScanId.Location = New System.Drawing.Point(11, 87)
+        Me.txtEmployeeScanId.MaxLength = 8
         Me.txtEmployeeScanId.Name = "txtEmployeeScanId"
         Me.txtEmployeeScanId.ShortcutsEnabled = False
         Me.txtEmployeeScanId.Size = New System.Drawing.Size(439, 56)
@@ -215,9 +218,9 @@ Partial Class frmScreenEntry
         Me.lblNotFtw.ForeColor = System.Drawing.Color.Black
         Me.lblNotFtw.Location = New System.Drawing.Point(11, 425)
         Me.lblNotFtw.Name = "lblNotFtw"
-        Me.lblNotFtw.Size = New System.Drawing.Size(223, 24)
+        Me.lblNotFtw.Size = New System.Drawing.Size(166, 24)
         Me.lblNotFtw.TabIndex = 531
-        Me.lblNotFtw.Text = "    Unfit To Work                (F11)"
+        Me.lblNotFtw.Text = "     Unfit To Work    (F11)"
         Me.lblNotFtw.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'chkNotFtw
@@ -239,7 +242,7 @@ Partial Class frmScreenEntry
         Me.btnDelete.DefaultScheme = False
         Me.btnDelete.DialogResult = System.Windows.Forms.DialogResult.None
         Me.btnDelete.Font = New System.Drawing.Font("Verdana", 9.0!)
-        Me.btnDelete.Hint = "Save Record"
+        Me.btnDelete.Hint = "Delete existing record"
         Me.btnDelete.Image = Global.SickLeaveScreening.My.Resources.Resources.Delete_16_x_16
         Me.btnDelete.Location = New System.Drawing.Point(124, 467)
         Me.btnDelete.Name = "btnDelete"
@@ -256,7 +259,7 @@ Partial Class frmScreenEntry
         Me.btnClear.DefaultScheme = False
         Me.btnClear.DialogResult = System.Windows.Forms.DialogResult.None
         Me.btnClear.Font = New System.Drawing.Font("Verdana", 9.0!)
-        Me.btnClear.Hint = "Clear Form"
+        Me.btnClear.Hint = "Reset data entry form"
         Me.btnClear.Location = New System.Drawing.Point(237, 467)
         Me.btnClear.Name = "btnClear"
         Me.btnClear.Scheme = PinkieControls.ButtonXP.Schemes.Blue
@@ -272,7 +275,7 @@ Partial Class frmScreenEntry
         Me.btnClose.DefaultScheme = False
         Me.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.btnClose.Font = New System.Drawing.Font("Verdana", 9.0!)
-        Me.btnClose.Hint = "Close Data Entry"
+        Me.btnClose.Hint = "Close data entry form"
         Me.btnClose.Location = New System.Drawing.Point(345, 467)
         Me.btnClose.Name = "btnClose"
         Me.btnClose.Scheme = PinkieControls.ButtonXP.Schemes.Blue
@@ -288,7 +291,7 @@ Partial Class frmScreenEntry
         Me.btnSave.DefaultScheme = False
         Me.btnSave.DialogResult = System.Windows.Forms.DialogResult.None
         Me.btnSave.Font = New System.Drawing.Font("Verdana", 9.0!)
-        Me.btnSave.Hint = "Save Record"
+        Me.btnSave.Hint = "Save current record"
         Me.btnSave.Image = Global.SickLeaveScreening.My.Resources.Resources.Save_16_x_16
         Me.btnSave.Location = New System.Drawing.Point(11, 467)
         Me.btnSave.Name = "btnSave"
@@ -362,6 +365,31 @@ Partial Class frmScreenEntry
         Me.cmbLeaveType.Size = New System.Drawing.Size(340, 24)
         Me.cmbLeaveType.TabIndex = 546
         '
+        'lblTotalDays
+        '
+        Me.lblTotalDays.BackColor = System.Drawing.SystemColors.Control
+        Me.lblTotalDays.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblTotalDays.ForeColor = System.Drawing.Color.Black
+        Me.lblTotalDays.Location = New System.Drawing.Point(331, 425)
+        Me.lblTotalDays.Name = "lblTotalDays"
+        Me.lblTotalDays.Padding = New System.Windows.Forms.Padding(5, 0, 0, 0)
+        Me.lblTotalDays.Size = New System.Drawing.Size(60, 24)
+        Me.lblTotalDays.TabIndex = 547
+        Me.lblTotalDays.Text = "Day(s)"
+        Me.lblTotalDays.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'txtTotalDays
+        '
+        Me.txtTotalDays.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.txtTotalDays.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtTotalDays.Enabled = False
+        Me.txtTotalDays.Font = New System.Drawing.Font("Verdana", 10.0!)
+        Me.txtTotalDays.Location = New System.Drawing.Point(390, 425)
+        Me.txtTotalDays.Name = "txtTotalDays"
+        Me.txtTotalDays.Size = New System.Drawing.Size(60, 24)
+        Me.txtTotalDays.TabIndex = 548
+        Me.txtTotalDays.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
         'frmScreenEntry
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -369,12 +397,16 @@ Partial Class frmScreenEntry
         Me.BackColor = System.Drawing.Color.White
         Me.CancelButton = Me.btnClose
         Me.ClientSize = New System.Drawing.Size(462, 511)
+        Me.Controls.Add(Me.txtTotalDays)
+        Me.Controls.Add(Me.lblTotalDays)
+        Me.Controls.Add(Me.lblReason)
+        Me.Controls.Add(Me.lblDiagnosis)
+        Me.Controls.Add(Me.txtReason)
+        Me.Controls.Add(Me.txtDiagnosis)
         Me.Controls.Add(Me.lblLeaveType)
         Me.Controls.Add(Me.cmbLeaveType)
         Me.Controls.Add(Me.lblClinicClearance)
         Me.Controls.Add(Me.txtEmployeeName)
-        Me.Controls.Add(Me.lblDiagnosis)
-        Me.Controls.Add(Me.txtDiagnosis)
         Me.Controls.Add(Me.chkNotFtw)
         Me.Controls.Add(Me.btnDelete)
         Me.Controls.Add(Me.btnClear)
@@ -391,9 +423,7 @@ Partial Class frmScreenEntry
         Me.Controls.Add(Me.txtDate)
         Me.Controls.Add(Me.lblDate)
         Me.Controls.Add(Me.lblEmployeeName)
-        Me.Controls.Add(Me.lblReason)
         Me.Controls.Add(Me.lblEmployeeScanId)
-        Me.Controls.Add(Me.txtReason)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Verdana", 8.5!)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
@@ -433,5 +463,6 @@ Partial Class frmScreenEntry
     Friend WithEvents lblClinicClearance As System.Windows.Forms.Label
     Friend WithEvents lblLeaveType As System.Windows.Forms.Label
     Friend WithEvents cmbLeaveType As System.Windows.Forms.ComboBox
-
+    Friend WithEvents lblTotalDays As Label
+    Friend WithEvents txtTotalDays As TextBox
 End Class
