@@ -57,8 +57,8 @@ Namespace My
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=LENOVO-AX3RONG2;Initial Catalog=LeaveFiling;Persist Security Info=Tru"& _ 
-            "e;User ID=sa;Password=Nbc12#")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=192.168.20.230;Initial Catalog=LeaveFiling;Persist Security Info=True"& _ 
+            ";User ID=sa;Password=Nbc12#")>  _
         Public ReadOnly Property LeaveConnectionString() As String
             Get
                 Return CType(Me("LeaveConnectionString"),String)
@@ -68,8 +68,8 @@ Namespace My
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=LENOVO-AX3RONG2;Initial Catalog=NBCTECHDB;Persist Security Info=True;"& _ 
-            "User ID=sa;Password=Nbc12#")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=192.168.20.230;Initial Catalog=NBCTECHDB;Persist Security Info=True;U"& _ 
+            "ser ID=sa;Password=Nbc12#")>  _
         Public ReadOnly Property JeonsoftConnectionString() As String
             Get
                 Return CType(Me("JeonsoftConnectionString"),String)
@@ -79,8 +79,8 @@ Namespace My
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=LENOVO-AX3RONG2;Initial Catalog=LeaveFiling;Persist Security Info=Tru"& _ 
-            "e;User ID=sa;Password=Nbc12#")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=192.168.20.230;Initial Catalog=LeaveFiling;Persist Security Info=True"& _ 
+            ";User ID=sa;Password=Nbc12#")>  _
         Public ReadOnly Property LeaveConnectionStringRpt() As String
             Get
                 Return CType(Me("LeaveConnectionStringRpt"),String)

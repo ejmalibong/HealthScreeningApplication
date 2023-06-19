@@ -2,13 +2,13 @@
 Imports System.Data.SqlClient
 Imports System.Configuration
 Imports BlackCoffeeLibrary
-Imports LeaveFilingSystem
-Imports LeaveFilingSystem.dsLeaveFiling
-Imports LeaveFilingSystem.dsLeaveFilingTableAdapters
+Imports SickLeaveScreening
+Imports SickLeaveScreening.dsLeaveFiling
+Imports SickLeaveScreening.dsLeaveFilingTableAdapters
 
 Public Class frmDoctor
     Private connection As New clsConnection
-    Private dbLeaveFiling As New SqlDbMethod(connection.LocalConnection)
+    Private dbLeaveFiling As New SqlDbMethod(connection.ServerConnection)
     Private dbMain As New Main
 
     Private dsLeaveFiling As New dsLeaveFiling
@@ -112,10 +112,12 @@ Public Class frmDoctor
 
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
         Try
-            Me.bsClinic.AddNew()
-            Me.bsClinic.MoveLast()
-            dgvList.CurrentCell = dgvList.CurrentRow.Cells(1)
-            dgvList.BeginEdit(True)
+            MessageBox.Show("Under maintenance.", "", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Exit Sub
+
+            'Me.bsClinic.AddNew()
+            'Me.bsClinic.MoveLast()
+            'dgvList.BeginEdit(True)
         Catch ex As Exception
             MessageBox.Show(dbMain.SetExceptionMessage(ex), "", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
@@ -143,14 +145,14 @@ Public Class frmDoctor
             End If
 
             If dsLeaveFiling.HasChanges Then
-                Dim _result As DialogResult = MessageBox.Show("Discard changes?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)
+                Dim result As DialogResult = MessageBox.Show("Discard changes?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)
 
-                If _result = Windows.Forms.DialogResult.Yes Then
+                If result = Windows.Forms.DialogResult.Yes Then
                     dgvList.CancelEdit()
                     Me.bsClinic.CancelEdit()
                     Me.dsLeaveFiling.RejectChanges()
 
-                ElseIf _result = Windows.Forms.DialogResult.No Then
+                ElseIf result = Windows.Forms.DialogResult.No Then
                     dgvList.CurrentRow.Cells(1).Selected = True
                     dgvList.BeginEdit(True)
                     Return

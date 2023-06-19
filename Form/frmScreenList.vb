@@ -1,45 +1,54 @@
 ﻿Imports BlackCoffeeLibrary
-Imports LeaveFilingSystem
-Imports LeaveFilingSystem.dsLeaveFiling
-Imports LeaveFilingSystem.dsLeaveFilingTableAdapters
 Imports System.ComponentModel
 Imports System.Data.SqlClient
 Imports System.Net.Mail
+Imports Microsoft.Synchronization
+Imports Microsoft.Synchronization.Data
+Imports Microsoft.Synchronization.Data.SqlServer
 
 Public Class frmScreenList
-    Private Shared IsSent As Boolean = False
-    Private adpLeaveFiling As New LeaveFilingTableAdapter
-    Private adpScreening As New ScreeningTableAdapter
-    Private bsScreening As New BindingSource
     Private connection As New clsConnection
     Private dbJeonsoft As New SqlDbMethod(connection.JeonsoftConnection)
-    Private dbLeaveFiling As New SqlDbMethod(connection.LocalConnection)
+    Private dbScreening As New SqlDbMethod(connection.ServerConnection)
     Private dbMain As New Main
 
     Private devEmailAddress As String = String.Empty
     Private devEmailPassword As String = String.Empty
+
     Private dicSearchCriteria As New Dictionary(Of String, Integer)
-    Private dsLeaveFiling As New dsLeaveFiling
-    Private dtScreening As New ScreeningDataTable
+
+    Private dtScreening As New DataTable
     Private employeeCode As String = String.Empty
     Private employeeId As Integer = 0
     Private employeeName As String = String.Empty
+    Private isAdmin As Boolean = False
+
     Private indexPosition As Integer = 0
     Private indexScroll As Integer = 0
     Private isDebug As Boolean = False
-    Private isFilterByAbsentFrom As Boolean = False
-    Private isFilterByDiagnosis As Boolean = False
+
+    Private bsScreening As New BindingSource
+
+    Private isFilterByAbsentDate As Boolean = False
+    Private isFilterByScreenDate As Boolean = False
+    Private isFilterByMedCertDate As Boolean = False
+    Private isFilterByLeaveType As Boolean = False
     Private isFilterByEmployeeName As Boolean = False
     Private isFilterByReason As Boolean = False
-    Private isFilterByScreenDate As Boolean = False
+    Private isFilterByDiagnosis As Boolean = False
+
     Private pageCount As Integer
     Private pageIndex As Integer
     Private pageSize As Integer
+
     Private positionName As String = String.Empty
     Private senderEmailAddress As String = String.Empty
     Private senderEmailPassword As String = String.Empty
+
+    Private Shared isSent As Boolean = False
+
     Private totalCount As Integer
-    Public Sub New(_employeeId As Integer, _employeeCode As String, _employeeName As String, _positionName As String)
+    Public Sub New(_employeeId As Integer, _employeeCode As String, _employeeName As String, _positionName As String, _isAdmin As Boolean)
 
         ' This call is required by the designer.
         InitializeComponent()
@@ -49,20 +58,20 @@ Public Class frmScreenList
         employeeCode = _employeeCode
         employeeName = _employeeName
         positionName = _positionName
+        isAdmin = _isAdmin
 
-        txtUsername.Text = StrConv(employeeName, VbStrConv.ProperCase) & " / " & positionName
+        txtUsername.Text = employeeName.ToString.Trim & " / " & positionName
         isDebug = SickLeaveScreening.My.Settings.IsDebug
     End Sub
 
     Public Sub RefreshList()
         If dgvList IsNot Nothing AndAlso dgvList.CurrentRow IsNot Nothing Then Me.Invoke(New Action(AddressOf GetScrollingIndex))
-        pageIndex = 0
         BindPage()
         If dgvList IsNot Nothing AndAlso dgvList.CurrentRow IsNot Nothing Then Me.Invoke(New Action(AddressOf SetScrollingIndex))
     End Sub
 
-    Public Sub SendApproverNotif(leaveFileId As Integer, approverId As Integer, leaveType As String, employeeName As String, department As String, leaveDate As String,
-                                 reason As String)
+    Public Sub SendApproverNotif(leaveFileId As Integer, approverId As Integer, leaveType As String, employeeName As String, department As String, leaveDate As String, reason As String)
+
         Try
             Dim client As New SmtpClient()
             Dim message As New MailMessage()
@@ -90,7 +99,7 @@ Public Class frmScreenList
             prmApprover(0) = New SqlParameter("@EmployeeId", SqlDbType.Int)
             prmApprover(0).Value = approverId
 
-            Using reader As IDataReader = dbLeaveFiling.ExecuteReader("SELECT TRIM(NbcEmailAddress) AS NbcEmailAddress, TRIM(EmployeeName) AS EmployeeName " &
+            Using reader As IDataReader = dbScreening.ExecuteReader("SELECT TRIM(NbcEmailAddress) AS NbcEmailAddress, TRIM(EmployeeName) AS EmployeeName " &
                                                                       "FROM dbo.Employee WHERE EmployeeId = @EmployeeId", CommandType.Text, prmApprover)
 
                 While reader.Read
@@ -131,9 +140,8 @@ Public Class frmScreenList
         End Try
     End Sub
 
-    Public Sub SendDevNotif(employeeId As Integer, employeeName As String, leaveTypeId As Integer, leaveType As String,
-                                      departmentId As Integer, departmentName As String, teamId As Integer, teamName As String,
-                                      positionId As Integer, positionName As String)
+    Public Sub SendDevNotif(employeeId As Integer, employeeName As String, leaveTypeId As Integer, leaveType As String, departmentId As Integer, departmentName As String, teamId As Integer, teamName As String, positionId As Integer, positionName As String, toName As String)
+
         Try
             Dim client As New SmtpClient()
             Dim message As New MailMessage()
@@ -149,6 +157,7 @@ Public Class frmScreenList
                                        teamId & ")" & "</td></tr>" &
                                        "<tr><td style=""width:10px""></td><td>Position: </td><td style=""width:50px""></td><td>" & positionName & " (" &
                                        positionId & ")" & "</td></tr>" &
+                                       "<tr><td style=""width:10px""></td><td>To: </td><td style=""width:50px""></td><td>" & toName & "</td></tr>" &
                                        "</table>" &
                                        "<br> <br>" &
                                        "<em>This is a system-generated email. Please do not reply.</em>"
@@ -178,8 +187,8 @@ Public Class frmScreenList
         End Try
     End Sub
 
-    Public Sub SendRequestorNotif(employeeId As Integer, screenDate As String, leaveTypeName As String, leaveDate As String, quantity As Integer, reason As String,
-                                      diagnosis As String, isFitToWork As String)
+    Public Sub SendRequestorNotif(employeeId As Integer, screenDate As String, leaveTypeName As String, leaveDate As String, quantity As Integer, reason As String, diagnosis As String, isFitToWork As String)
+
         Try
             Dim client As New SmtpClient()
             Dim message As New MailMessage()
@@ -311,22 +320,132 @@ Public Class frmScreenList
         Try
             totalCount = 0
 
-            If isFilterByScreenDate = True Then
-                Me.adpScreening.FillByScreenDate(Me.dsLeaveFiling.Screening, pageIndex, pageSize, totalCount, dtpScreenDateFrom.Value.Date, dtpScreenDateTo.Value.Date)
+            If isFilterByAbsentDate = True Then
+                Dim prmRouting(4) As SqlParameter
+                prmRouting(0) = New SqlParameter("@PageIndex", SqlDbType.Int)
+                prmRouting(0).Value = pageIndex
+                prmRouting(1) = New SqlParameter("@PageSize", SqlDbType.Int)
+                prmRouting(1).Value = pageSize
+                prmRouting(2) = New SqlParameter("@TotalCount", SqlDbType.Int)
+                prmRouting(2).Direction = ParameterDirection.Output
+                prmRouting(2).Value = totalCount
+                prmRouting(3) = New SqlParameter("@AbsentDateFrom", SqlDbType.Date)
+                prmRouting(3).Value = dtpAbsentFrom.Value
+                prmRouting(4) = New SqlParameter("@AbsentDateTo", SqlDbType.Date)
+                prmRouting(4).Value = dtpAbsentTo.Value
+
+                dtScreening = dbScreening.FillDataTable("RdScreeningByAbsentDate", CommandType.StoredProcedure, prmRouting)
+                totalCount = prmRouting(2).Value
+
+            ElseIf isFilterByScreenDate = True Then
+                Dim prmRouting(4) As SqlParameter
+                prmRouting(0) = New SqlParameter("@PageIndex", SqlDbType.Int)
+                prmRouting(0).Value = pageIndex
+                prmRouting(1) = New SqlParameter("@PageSize", SqlDbType.Int)
+                prmRouting(1).Value = pageSize
+                prmRouting(2) = New SqlParameter("@TotalCount", SqlDbType.Int)
+                prmRouting(2).Direction = ParameterDirection.Output
+                prmRouting(2).Value = totalCount
+                prmRouting(3) = New SqlParameter("@ScreenDateFrom", SqlDbType.Date)
+                prmRouting(3).Value = dtpAbsentFrom.Value
+                prmRouting(4) = New SqlParameter("@ScreenDateTo", SqlDbType.Date)
+                prmRouting(4).Value = dtpAbsentTo.Value
+
+                dtScreening = dbScreening.FillDataTable("RdScreeningByScreenDate", CommandType.StoredProcedure, prmRouting)
+                totalCount = prmRouting(2).Value
+
+            ElseIf isFilterByMedCertDate = True Then
+                Dim prmRouting(4) As SqlParameter
+                prmRouting(0) = New SqlParameter("@PageIndex", SqlDbType.Int)
+                prmRouting(0).Value = pageIndex
+                prmRouting(1) = New SqlParameter("@PageSize", SqlDbType.Int)
+                prmRouting(1).Value = pageSize
+                prmRouting(2) = New SqlParameter("@TotalCount", SqlDbType.Int)
+                prmRouting(2).Direction = ParameterDirection.Output
+                prmRouting(2).Value = totalCount
+                prmRouting(3) = New SqlParameter("@AbsentDateFrom", SqlDbType.Date)
+                prmRouting(3).Value = dtpAbsentFrom.Value
+                prmRouting(4) = New SqlParameter("@AbsentDateTo", SqlDbType.Date)
+                prmRouting(4).Value = dtpAbsentTo.Value
+
+                dtScreening = dbScreening.FillDataTable("RdScreeningByMedCertDate", CommandType.StoredProcedure, prmRouting)
+                totalCount = prmRouting(2).Value
+
+            ElseIf isFilterByLeaveType = True Then
+                Dim prmRouting(3) As SqlParameter
+                prmRouting(0) = New SqlParameter("@PageIndex", SqlDbType.Int)
+                prmRouting(0).Value = pageIndex
+                prmRouting(1) = New SqlParameter("@PageSize", SqlDbType.Int)
+                prmRouting(1).Value = pageSize
+                prmRouting(2) = New SqlParameter("@TotalCount", SqlDbType.Int)
+                prmRouting(2).Direction = ParameterDirection.Output
+                prmRouting(2).Value = totalCount
+                prmRouting(3) = New SqlParameter("@LeaveTypeId", SqlDbType.Int)
+                prmRouting(3).Value = IIf(cmbCommon.SelectedValue = 0, Nothing, cmbCommon.SelectedValue)
+
+                dtScreening = dbScreening.FillDataTable("RdScreeningByLeaveTypeId", CommandType.StoredProcedure, prmRouting)
+                totalCount = prmRouting(2).Value
+
             ElseIf isFilterByEmployeeName = True Then
-                Me.adpScreening.FillByEmployeeName(Me.dsLeaveFiling.Screening, pageIndex, pageSize, totalCount, txtEmployeeName.Text.Trim)
-            ElseIf isFilterByAbsentFrom = True Then
-                Me.adpScreening.FillByAbsentFrom(Me.dsLeaveFiling.Screening, pageIndex, pageSize, totalCount, dtpAbsentFrom.Value.Date, dtpAbsentTo.Value.Date)
+                Dim prmRouting(3) As SqlParameter
+                prmRouting(0) = New SqlParameter("@PageIndex", SqlDbType.Int)
+                prmRouting(0).Value = pageIndex
+                prmRouting(1) = New SqlParameter("@PageSize", SqlDbType.Int)
+                prmRouting(1).Value = pageSize
+                prmRouting(2) = New SqlParameter("@TotalCount", SqlDbType.Int)
+                prmRouting(2).Direction = ParameterDirection.Output
+                prmRouting(2).Value = totalCount
+                prmRouting(3) = New SqlParameter("@EmployeeName", SqlDbType.NVarChar)
+                prmRouting(3).Value = IIf(String.IsNullOrEmpty(txtCommon.Text.Trim), Nothing, txtCommon.Text.Trim)
+
+                dtScreening = dbScreening.FillDataTable("RdScreeningByEmployeeName", CommandType.StoredProcedure, prmRouting)
+                totalCount = prmRouting(2).Value
+
             ElseIf isFilterByReason = True Then
-                Me.adpScreening.FillByReason(Me.dsLeaveFiling.Screening, pageIndex, pageSize, totalCount, txtReason.Text.Trim)
+                Dim prmRouting(3) As SqlParameter
+                prmRouting(0) = New SqlParameter("@PageIndex", SqlDbType.Int)
+                prmRouting(0).Value = pageIndex
+                prmRouting(1) = New SqlParameter("@PageSize", SqlDbType.Int)
+                prmRouting(1).Value = pageSize
+                prmRouting(2) = New SqlParameter("@TotalCount", SqlDbType.Int)
+                prmRouting(2).Direction = ParameterDirection.Output
+                prmRouting(2).Value = totalCount
+                prmRouting(3) = New SqlParameter("@Reason", SqlDbType.NVarChar)
+                prmRouting(3).Value = IIf(String.IsNullOrEmpty(txtCommon.Text.Trim), Nothing, txtCommon.Text.Trim)
+
+                dtScreening = dbScreening.FillDataTable("RdScreeningByReason", CommandType.StoredProcedure, prmRouting)
+                totalCount = prmRouting(2).Value
+
             ElseIf isFilterByDiagnosis = True Then
-                Me.adpScreening.FillByDiagnosis(Me.dsLeaveFiling.Screening, pageIndex, pageSize, totalCount, txtDiagnosis.Text.Trim)
+                Dim prmRouting(3) As SqlParameter
+                prmRouting(0) = New SqlParameter("@PageIndex", SqlDbType.Int)
+                prmRouting(0).Value = pageIndex
+                prmRouting(1) = New SqlParameter("@PageSize", SqlDbType.Int)
+                prmRouting(1).Value = pageSize
+                prmRouting(2) = New SqlParameter("@TotalCount", SqlDbType.Int)
+                prmRouting(2).Direction = ParameterDirection.Output
+                prmRouting(2).Value = totalCount
+                prmRouting(3) = New SqlParameter("@Diagnosis", SqlDbType.NVarChar)
+                prmRouting(3).Value = IIf(String.IsNullOrEmpty(txtCommon.Text.Trim), Nothing, txtCommon.Text.Trim)
+
+                dtScreening = dbScreening.FillDataTable("RdScreeningByDiagnosis", CommandType.StoredProcedure, prmRouting)
+                totalCount = prmRouting(2).Value
+
             Else
-                Me.adpScreening.FillScreening(Me.dsLeaveFiling.Screening, pageIndex, pageSize, totalCount)
+                Dim prmRouting(2) As SqlParameter
+                prmRouting(0) = New SqlParameter("@PageIndex", SqlDbType.Int)
+                prmRouting(0).Value = pageIndex
+                prmRouting(1) = New SqlParameter("@PageSize", SqlDbType.Int)
+                prmRouting(1).Value = pageSize
+                prmRouting(2) = New SqlParameter("@TotalCount", SqlDbType.Int)
+                prmRouting(2).Direction = ParameterDirection.Output
+                prmRouting(2).Value = totalCount
+
+                dtScreening = dbScreening.FillDataTable("RdScreening", CommandType.StoredProcedure, prmRouting)
+                totalCount = prmRouting(2).Value
             End If
 
-            Me.bsScreening.DataSource = Me.dsLeaveFiling
-            Me.bsScreening.DataMember = dtScreening.TableName
+            Me.bsScreening.DataSource = dtScreening
             Me.bsScreening.ResetBindings(True)
             dgvList.AutoGenerateColumns = False
             Me.dgvList.DataSource = Me.bsScreening
@@ -341,11 +460,9 @@ Public Class frmScreenList
                 pageCount = Math.Truncate(totalCount / pageSize) + 1
             End If
 
-            'current and total pages
             txtPageNumber.Text = pageIndex + 1
             txtTotalPageNumber.Text = " of " & CInt(pageCount) & " Page(s)"
 
-            'enables pager
             txtPageNumber.Enabled = True
             txtTotalPageNumber.Enabled = True
             BindingNavigatorMoveFirstItem.Enabled = True
@@ -382,7 +499,7 @@ Public Class frmScreenList
                 prmCount(0) = New SqlParameter("@ScreenId", SqlDbType.Int)
                 prmCount(0).Value = screenId
 
-                count = dbLeaveFiling.ExecuteScalar("SELECT Count(LeaveFileId) FROM dbo.LeaveFiling WHERE ScreenId = @ScreenId", CommandType.Text, prmCount)
+                count = dbScreening.ExecuteScalar("SELECT Count(LeaveFileId) FROM dbo.LeaveFiling WHERE ScreenId = @ScreenId", CommandType.Text, prmCount)
 
                 If count > 0 Then
                     MessageBox.Show("Record was already used in the Leave Application System.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -393,8 +510,8 @@ Public Class frmScreenList
                     End If
                 End If
 
-                Me.adpScreening.Update(Me.dsLeaveFiling.Screening)
-                Me.dsLeaveFiling.AcceptChanges()
+                'Me.adpScreening.Update(Me.dsLeaveFiling.Screening)
+                'Me.dsLeaveFiling.AcceptChanges()
                 RefreshList()
             End If
         Catch ex As Exception
@@ -453,66 +570,16 @@ Public Class frmScreenList
 
     Private Sub btnReset_Click(sender As Object, e As EventArgs) Handles btnReset.Click
         Try
-            If cmbSearchCriteria.SelectedValue = 1 Then
-                isFilterByScreenDate = False
-                isFilterByEmployeeName = False
-                isFilterByAbsentFrom = False
-                isFilterByReason = False
-                isFilterByDiagnosis = False
+            isFilterByAbsentDate = False
+            isFilterByScreenDate = False
+            isFilterByMedCertDate = False
+            isFilterByLeaveType = False
+            isFilterByEmployeeName = False
+            isFilterByReason = False
+            isFilterByDiagnosis = False
 
-                dtpScreenDateFrom.Value = Date.Now
-                dtpScreenDateTo.Value = Date.Now
-                pageIndex = 0
-                BindPage()
-
-            ElseIf cmbSearchCriteria.SelectedValue = 2 Then
-                txtEmployeeName.Clear()
-
-                isFilterByScreenDate = False
-                isFilterByEmployeeName = True
-                isFilterByAbsentFrom = False
-                isFilterByReason = False
-                isFilterByDiagnosis = False
-
-                pageIndex = 0
-                BindPage()
-
-            ElseIf cmbSearchCriteria.SelectedValue = 3 Then
-                isFilterByScreenDate = False
-                isFilterByEmployeeName = False
-                isFilterByAbsentFrom = False
-                isFilterByReason = False
-                isFilterByDiagnosis = False
-
-                dtpAbsentFrom.Value = Date.Now
-                dtpAbsentTo.Value = Date.Now
-                pageIndex = 0
-                BindPage()
-
-            ElseIf cmbSearchCriteria.SelectedValue = 4 Then
-                txtReason.Clear()
-
-                isFilterByScreenDate = False
-                isFilterByEmployeeName = False
-                isFilterByAbsentFrom = False
-                isFilterByReason = True
-                isFilterByDiagnosis = False
-
-                pageIndex = 0
-                BindPage()
-
-            ElseIf cmbSearchCriteria.SelectedValue = 5 Then
-                txtDiagnosis.Clear()
-
-                isFilterByScreenDate = False
-                isFilterByEmployeeName = False
-                isFilterByAbsentFrom = False
-                isFilterByReason = False
-                isFilterByDiagnosis = True
-
-                pageIndex = 0
-                BindPage()
-            End If
+            pageIndex = 0
+            BindPage()
         Catch ex As Exception
             MessageBox.Show(dbMain.SetExceptionMessage(ex), "", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
@@ -520,51 +587,63 @@ Public Class frmScreenList
 
     Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
         Try
-            If cmbSearchCriteria.SelectedValue = 1 Then
-                If dtpScreenDateFrom.Value.Date > dtpScreenDateTo.Value.Date Then
-                    MessageBox.Show("Start date is later than end date.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                    Return
-                End If
+            Select Case cmbSearchCriteria.SelectedValue
+                Case 1, 2, 3
+                    If dtpAbsentFrom.Value.Date > dtpAbsentTo.Value.Date Then
+                        MessageBox.Show("Start date is later than end date.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        Return
+                    End If
 
-                isFilterByScreenDate = True
-                isFilterByEmployeeName = False
-                isFilterByAbsentFrom = False
-                isFilterByReason = False
-                isFilterByDiagnosis = False
+                    Select Case cmbSearchCriteria.SelectedValue
+                        Case 1
+                            isFilterByScreenDate = True
+                            isFilterByAbsentDate = False
+                            isFilterByMedCertDate = False
+                        Case 2
+                            isFilterByScreenDate = False
+                            isFilterByAbsentDate = True
+                            isFilterByMedCertDate = False
+                        Case 3
+                            isFilterByScreenDate = False
+                            isFilterByAbsentDate = False
+                            isFilterByMedCertDate = True
+                    End Select
 
-            ElseIf cmbSearchCriteria.SelectedValue = 2 Then
-                isFilterByScreenDate = False
-                isFilterByEmployeeName = True
-                isFilterByAbsentFrom = False
-                isFilterByReason = False
-                isFilterByDiagnosis = False
+                    isFilterByLeaveType = False
+                    isFilterByEmployeeName = False
+                    isFilterByReason = False
+                    isFilterByDiagnosis = False
 
-            ElseIf cmbSearchCriteria.SelectedValue = 3 Then
-                If dtpAbsentFrom.Value.Date > dtpAbsentTo.Value.Date Then
-                    MessageBox.Show("Start date is later than end date.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                    Return
-                End If
+                Case 4
+                    isFilterByScreenDate = False
+                    isFilterByAbsentDate = False
+                    isFilterByMedCertDate = False
+                    isFilterByLeaveType = True
+                    isFilterByEmployeeName = False
+                    isFilterByReason = False
+                    isFilterByDiagnosis = False
 
-                isFilterByScreenDate = False
-                isFilterByEmployeeName = False
-                isFilterByAbsentFrom = True
-                isFilterByReason = False
-                isFilterByDiagnosis = False
+                Case 5, 6, 7
+                    isFilterByScreenDate = False
+                    isFilterByAbsentDate = False
+                    isFilterByMedCertDate = False
+                    isFilterByLeaveType = False
 
-            ElseIf cmbSearchCriteria.SelectedValue = 4 Then
-                isFilterByScreenDate = False
-                isFilterByEmployeeName = False
-                isFilterByAbsentFrom = False
-                isFilterByReason = True
-                isFilterByDiagnosis = False
-
-            ElseIf cmbSearchCriteria.SelectedValue = 5 Then
-                isFilterByScreenDate = False
-                isFilterByEmployeeName = False
-                isFilterByAbsentFrom = False
-                isFilterByReason = False
-                isFilterByDiagnosis = True
-            End If
+                    Select Case cmbSearchCriteria.SelectedValue
+                        Case 5
+                            isFilterByEmployeeName = True
+                            isFilterByReason = False
+                            isFilterByDiagnosis = False
+                        Case 6
+                            isFilterByEmployeeName = False
+                            isFilterByReason = True
+                            isFilterByDiagnosis = False
+                        Case 7
+                            isFilterByEmployeeName = False
+                            isFilterByReason = False
+                            isFilterByDiagnosis = True
+                    End Select
+            End Select
 
             pageIndex = 0
             BindPage()
@@ -575,47 +654,35 @@ Public Class frmScreenList
 
     Private Sub cmbSearchCriteria_SelectedValueChanged(sender As Object, e As EventArgs) Handles cmbSearchCriteria.SelectedValueChanged
         Try
-            If cmbSearchCriteria.SelectedValue = 1 Then
-                pnlScreenDate.Visible = True
-                pnlEmployeeName.Visible = False
-                pnlAbsentDate.Visible = False
-                pnlReason.Visible = False
-                pnlDiagnosis.Visible = False
-                Me.ActiveControl = dtpScreenDateFrom
+            Select Case cmbSearchCriteria.SelectedValue
+                Case 1, 2, 3
+                    dtpAbsentFrom.Value = CDate(dbScreening.GetServerDate)
+                    dtpAbsentTo.Value = CDate(dbScreening.GetServerDate)
 
-            ElseIf cmbSearchCriteria.SelectedValue = 2 Then
-                pnlScreenDate.Visible = False
-                pnlEmployeeName.Visible = True
-                pnlAbsentDate.Visible = False
-                pnlReason.Visible = False
-                pnlDiagnosis.Visible = False
-                Me.ActiveControl = txtEmployeeName
+                    pnlDate.Visible = True
+                    pnlSearchByText.Visible = False
+                    pnlSearchByCmb.Visible = False
+                    Me.ActiveControl = dtpAbsentFrom
+                Case 4
+                    pnlDate.Visible = False
+                    pnlSearchByText.Visible = False
+                    pnlSearchByCmb.Visible = True
+                    Me.ActiveControl = cmbCommon
 
-            ElseIf cmbSearchCriteria.SelectedValue = 3 Then
-                pnlScreenDate.Visible = False
-                pnlEmployeeName.Visible = False
-                pnlAbsentDate.Visible = True
-                pnlReason.Visible = False
-                pnlDiagnosis.Visible = False
-                Me.ActiveControl = dtpAbsentFrom
+                    cmbCommon.SelectedValue = 0
+                    cmbCommon.DataSource = Nothing
+                    cmbCommon.Items.Clear()
 
-            ElseIf cmbSearchCriteria.SelectedValue = 4 Then
-                pnlScreenDate.Visible = False
-                pnlEmployeeName.Visible = False
-                pnlAbsentDate.Visible = False
-                pnlReason.Visible = True
-                pnlDiagnosis.Visible = False
-                Me.ActiveControl = txtReason
+                    dbScreening.FillCmbWithCaption("SELECT * FROM dbo.LeaveType ORDER BY TRIM(LeaveTypeName) ", CommandType.Text,
+                                                   "LeaveTypeId", "LeaveTypeName", cmbCommon, "< All >")
+                Case 5, 6, 7
+                    txtCommon.Clear()
 
-            ElseIf cmbSearchCriteria.SelectedValue = 5 Then
-                pnlScreenDate.Visible = False
-                pnlEmployeeName.Visible = False
-                pnlAbsentDate.Visible = False
-                pnlReason.Visible = False
-                pnlDiagnosis.Visible = True
-                Me.ActiveControl = txtDiagnosis
-
-            End If
+                    pnlDate.Visible = False
+                    pnlSearchByText.Visible = True
+                    pnlSearchByCmb.Visible = False
+                    Me.ActiveControl = txtCommon
+            End Select
         Catch ex As Exception
             MessageBox.Show(dbMain.SetExceptionMessage(ex), "", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
@@ -626,11 +693,13 @@ Public Class frmScreenList
     End Sub
 
     Private Sub FillSearchCriteria()
-        dicSearchCriteria.Add(" Screening Date", 1)
-        dicSearchCriteria.Add(" Employee Name", 2)
-        dicSearchCriteria.Add(" Absent Date", 3)
-        dicSearchCriteria.Add(" Reason", 4)
-        dicSearchCriteria.Add(" Diagnosis", 5)
+        dicSearchCriteria.Add(" Absent Date", 1)
+        dicSearchCriteria.Add(" Screening Date", 2)
+        dicSearchCriteria.Add(" Medical Cert Date", 3)
+        dicSearchCriteria.Add(" Leave Type", 4)
+        dicSearchCriteria.Add(" Employee Name", 5)
+        dicSearchCriteria.Add(" Reason", 6)
+        dicSearchCriteria.Add(" Diagnosis", 7)
         cmbSearchCriteria.DisplayMember = "Key"
         cmbSearchCriteria.ValueMember = "Value"
         cmbSearchCriteria.DataSource = New BindingSource(dicSearchCriteria, Nothing)
@@ -638,6 +707,7 @@ Public Class frmScreenList
 
     Private Sub frmScreenList_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         dgvList.Dispose()
+        Application.Exit()
     End Sub
 
     Private Sub frmScreenList_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
@@ -648,12 +718,12 @@ Public Class frmScreenList
             Case Keys.F3
                 e.Handled = True
                 btnEdit.PerformClick()
-            Case Keys.F4
+            Case Keys.F8
                 e.Handled = True
                 btnDelete.PerformClick()
             Case Keys.F5
                 e.Handled = True
-                RefreshList()
+                btnRefresh.PerformClick()
         End Select
     End Sub
 
@@ -666,6 +736,7 @@ Public Class frmScreenList
         BindPage()
 
         FillSearchCriteria()
+        cmbSearchCriteria.SelectedValue = 1
 
         dbMain.EnableDoubleBuffered(dgvList)
 
@@ -682,7 +753,7 @@ Public Class frmScreenList
             prm(0) = New SqlParameter("@SettingId", SqlDbType.Int)
             prm(0).Value = settingId
 
-            Using reader As IDataReader = dbLeaveFiling.ExecuteReader("SELECT * FROM dbo.Setting WHERE SettingId = @SettingId", CommandType.Text, prm)
+            Using reader As IDataReader = dbScreening.ExecuteReader("SELECT * FROM dbo.Setting WHERE SettingId = @SettingId", CommandType.Text, prm)
                 While reader.Read
                     senderEmailAddress = reader.Item("SenderEmail").ToString.Trim
                     senderEmailPassword = reader.Item("SenderEmailPassword").ToString.Trim
@@ -759,7 +830,7 @@ Public Class frmScreenList
 
             Await HideStatus()
 
-            IsSent = True
+            isSent = True
         Catch ex As Exception
             MessageBox.Show(dbMain.SetExceptionMessage(ex), "", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try

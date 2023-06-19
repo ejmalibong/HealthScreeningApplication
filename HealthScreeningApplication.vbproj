@@ -25,7 +25,7 @@
     <MapFileExtensions>false</MapFileExtensions>
     <ProductName>Health Screening</ProductName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>103</ApplicationRevision>
+    <ApplicationRevision>109</ApplicationRevision>
     <ApplicationVersion>2.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -75,7 +75,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Health Screening.ico</ApplicationIcon>
@@ -84,7 +84,7 @@
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
@@ -94,6 +94,10 @@
       <HintPath>..\..\..\..\DLL\BlackCoffeeLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Synchronization, Version=2.1.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Synchronization.Data, Version=3.1.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Synchronization.Data.Server, Version=3.1.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Synchronization.Data.SqlServer, Version=3.1.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="PinkieControls">
       <HintPath>..\..\..\..\DLL\PinkieControls.dll</HintPath>
     </Reference>
@@ -105,6 +109,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -132,12 +137,30 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationEvents.vb" />
     <Compile Include="Class\clsConnection.vb" />
-    <Compile Include="Dataset\dsScreeningReport.Designer.vb">
-      <AutoGen>True</AutoGen>
+    <Compile Include="Class\DataSynchronizer.vb" />
+    <Compile Include="Dataset\dsJeonsoft.Designer.vb">
+      <DependentUpon>dsJeonsoft.xsd</DependentUpon>
       <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Dataset\dsJeonsoft.vb">
+      <DependentUpon>dsJeonsoft.xsd</DependentUpon>
+      <SubType>code</SubType>
+    </Compile>
+    <Compile Include="Dataset\dsLeaveFiling.Designer.vb">
+      <DependentUpon>dsLeaveFiling.xsd</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Dataset\dsLeaveFiling.vb">
+      <DependentUpon>dsLeaveFiling.xsd</DependentUpon>
+      <SubType>code</SubType>
+    </Compile>
+    <Compile Include="Dataset\dsScreeningReport.Designer.vb">
       <DependentUpon>dsScreeningReport.xsd</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Form\frmLogin.Designer.vb">
       <DependentUpon>frmLogin.vb</DependentUpon>
@@ -188,6 +211,39 @@
     <Compile Include="Settings.vb" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Dataset\dsJeonsoft.xsc">
+      <DependentUpon>dsJeonsoft.xsd</DependentUpon>
+    </None>
+    <None Include="Dataset\dsJeonsoft.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsJeonsoft.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="Dataset\dsJeonsoft.xss">
+      <DependentUpon>dsJeonsoft.xsd</DependentUpon>
+    </None>
+    <None Include="Dataset\dsLeaveFiling.xsc">
+      <DependentUpon>dsLeaveFiling.xsd</DependentUpon>
+    </None>
+    <None Include="Dataset\dsLeaveFiling.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsLeaveFiling.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="Dataset\dsLeaveFiling.xss">
+      <DependentUpon>dsLeaveFiling.xsd</DependentUpon>
+    </None>
+    <None Include="Dataset\dsScreeningReport.xsc">
+      <DependentUpon>dsScreeningReport.xsd</DependentUpon>
+    </None>
+    <None Include="Dataset\dsScreeningReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsScreeningReport.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="Dataset\dsScreeningReport.xss">
+      <DependentUpon>dsScreeningReport.xsd</DependentUpon>
+    </None>
     <None Include="Resources\Health Screening.png" />
     <None Include="Resources\Health Screening.ico" />
     <Content Include="Health Screening.ico" />
@@ -218,17 +274,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Dataset\dsScreeningReport.xsc">
-      <DependentUpon>dsScreeningReport.xsd</DependentUpon>
-    </None>
-    <None Include="Dataset\dsScreeningReport.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>dsScreeningReport.Designer.vb</LastGenOutput>
-    </None>
-    <None Include="Dataset\dsScreeningReport.xss">
-      <DependentUpon>dsScreeningReport.xsd</DependentUpon>
-    </None>
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
@@ -1364,15 +1409,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\SlsSysIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\LeaveApplicationSystem\LeaveApplicationSystem.vbproj">
-      <Project>{3cb635e1-81cb-470a-ac87-a6c70d0d4b04}</Project>
-      <Name>LeaveApplicationSystem</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -4,7 +4,7 @@ Imports System.Deployment.Application
 
 Public Class frmLogin
     Private connection As New clsConnection
-    Private dbLeaveFiling As New SqlDbMethod(connection.LocalConnection)
+    Private dbScreening As New SqlDbMethod(connection.ServerConnection)
     Private dbJeonsoft As New SqlDbMethod(connection.JeonsoftConnection)
     Private dbMain As New Main
 
@@ -13,17 +13,22 @@ Public Class frmLogin
     Private employeeName As String = String.Empty
     Private positionName As String = String.Empty
 
+    Private isAdmin As Boolean = False
     Private isDebug As Boolean = SickLeaveScreening.My.Settings.IsDebug
 
     Private Sub Login_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         If isDebug = True Then
             'doc omman
-            txtEmployeeId.Text = "FMB-0451"
-            txtPassword.Text = "1001"
+            'txtEmployeeId.Text = "FMB-0451"
+            'txtPassword.Text = "1001"
 
             'mam irene
-            'txtEmployeeId.Text = "1805-003"
-            'txtPassword.Text = "torejas"
+            txtEmployeeId.Text = "1805-003"
+            txtPassword.Text = "torejas"
+
+            'sysadmin
+            'txtEmployeeId.Text = "0000"
+            'txtPassword.Text = "admin123$$"
         End If
 
         If ApplicationDeployment.IsNetworkDeployed Then
@@ -69,8 +74,9 @@ Public Class frmLogin
 
             'check if nbc nurses
             'use latin1 general collation for case-sensitive password
-            count1 = dbLeaveFiling.ExecuteScalar("SELECT COUNT(EmployeeId) FROM VwClinicNbc WHERE EmployeeCode = @EmployeeCode AND " &
-                                                 "(TRIM(Password) COLLATE Latin1_General_CS_AS = @Password)", CommandType.Text, prmLogin1)
+            count1 = dbScreening.ExecuteScalar("SELECT COUNT(EmployeeId) FROM VwEmployee WHERE EmployeeCode = @EmployeeCode AND " &
+                                               "TRIM(Password) COLLATE Latin1_General_CS_AS = @Password AND IsActive = 1 AND EmployeeId IN ( " &
+                                               "SELECT EmployeeId FROM Nurse)", CommandType.Text, prmLogin1)
 
             If count1 > 0 Then 'nbc nurses
                 Dim prmLogin2(1) As SqlParameter
@@ -79,7 +85,7 @@ Public Class frmLogin
                 prmLogin2(1) = New SqlParameter("@Password", SqlDbType.NVarChar)
                 prmLogin2(1).Value = txtPassword.Text.Trim
 
-                Using reader As IDataReader = dbLeaveFiling.ExecuteReader("RdClinicNbc", CommandType.StoredProcedure, prmLogin2)
+                Using reader As IDataReader = dbScreening.ExecuteReader("RdEmployee", CommandType.StoredProcedure, prmLogin2)
                     GetUserInformation(reader)
                 End Using
 
@@ -91,8 +97,8 @@ Public Class frmLogin
                 prmLogin3(1) = New SqlParameter("@Password", SqlDbType.NVarChar)
                 prmLogin3(1).Value = txtPassword.Text.Trim
 
-                count2 = dbLeaveFiling.ExecuteScalar("SELECT COUNT(EmployeeId) FROM dbo.Clinic WHERE TRIM(EmployeeCode) = @EmployeeCode AND " &
-                                                     "(TRIM(Password) COLLATE Latin1_General_CS_AS = @Password) AND IsActive = 1", CommandType.Text, prmLogin3)
+                count2 = dbScreening.ExecuteScalar("SELECT COUNT(EmployeeId) FROM VwClinic WHERE EmployeeCode = @EmployeeCode AND " &
+                                                   "TRIM(Password) COLLATE Latin1_General_CS_AS = @Password AND IsActive = 1", CommandType.Text, prmLogin3)
 
                 If count2 > 0 Then 'non-nbc doctors
                     Dim prmLogin4(1) As SqlParameter
@@ -101,7 +107,7 @@ Public Class frmLogin
                     prmLogin4(1) = New SqlParameter("@Password", SqlDbType.NVarChar)
                     prmLogin4(1).Value = txtPassword.Text.Trim
 
-                    Using reader As IDataReader = dbLeaveFiling.ExecuteReader("RdClinic", CommandType.StoredProcedure, prmLogin4)
+                    Using reader As IDataReader = dbScreening.ExecuteReader("RdClinic", CommandType.StoredProcedure, prmLogin4)
                         GetUserInformation(reader)
                     End Using
 
@@ -127,12 +133,13 @@ Public Class frmLogin
             employeeCode = reader.Item("EmployeeCode").ToString.Trim
             employeeName = reader.Item("EmployeeName").ToString.Trim
             positionName = reader.Item("PositionName").ToString.Trim
+            isAdmin = reader.Item("IsAdmin")
         End While
         reader.Close()
 
         Me.Hide()
 
-        Dim frmScreenList As New frmScreenList(employeeId, employeeCode, employeeName, positionName)
+        Dim frmScreenList As New frmScreenList(employeeId, employeeCode, employeeName, positionName, isAdmin)
         frmScreenList.Show()
         txtEmployeeId.Clear()
         txtPassword.Clear()

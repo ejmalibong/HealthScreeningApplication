@@ -25,7 +25,7 @@ Option Explicit On
 Partial Public Class dsScreeningReport
     Inherits Global.System.Data.DataSet
     
-    Private tableVwScreening As VwScreeningDataTable
+    Private tableRptScreening As RptScreeningDataTable
     
     Private _schemaSerializationMode As Global.System.Data.SchemaSerializationMode = Global.System.Data.SchemaSerializationMode.IncludeSchema
     
@@ -56,8 +56,8 @@ Partial Public Class dsScreeningReport
         If (Me.DetermineSchemaSerializationMode(info, context) = Global.System.Data.SchemaSerializationMode.IncludeSchema) Then
             Dim ds As Global.System.Data.DataSet = New Global.System.Data.DataSet()
             ds.ReadXmlSchema(New Global.System.Xml.XmlTextReader(New Global.System.IO.StringReader(strSchema)))
-            If (Not (ds.Tables("VwScreening")) Is Nothing) Then
-                MyBase.Tables.Add(New VwScreeningDataTable(ds.Tables("VwScreening")))
+            If (Not (ds.Tables("RptScreening")) Is Nothing) Then
+                MyBase.Tables.Add(New RptScreeningDataTable(ds.Tables("RptScreening")))
             End If
             Me.DataSetName = ds.DataSetName
             Me.Prefix = ds.Prefix
@@ -80,9 +80,9 @@ Partial Public Class dsScreeningReport
      Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
      Global.System.ComponentModel.Browsable(false),  _
      Global.System.ComponentModel.DesignerSerializationVisibility(Global.System.ComponentModel.DesignerSerializationVisibility.Content)>  _
-    Public ReadOnly Property VwScreening() As VwScreeningDataTable
+    Public ReadOnly Property RptScreening() As RptScreeningDataTable
         Get
-            Return Me.tableVwScreening
+            Return Me.tableRptScreening
         End Get
     End Property
     
@@ -153,8 +153,8 @@ Partial Public Class dsScreeningReport
             Me.Reset
             Dim ds As Global.System.Data.DataSet = New Global.System.Data.DataSet()
             ds.ReadXml(reader)
-            If (Not (ds.Tables("VwScreening")) Is Nothing) Then
-                MyBase.Tables.Add(New VwScreeningDataTable(ds.Tables("VwScreening")))
+            If (Not (ds.Tables("RptScreening")) Is Nothing) Then
+                MyBase.Tables.Add(New RptScreeningDataTable(ds.Tables("RptScreening")))
             End If
             Me.DataSetName = ds.DataSetName
             Me.Prefix = ds.Prefix
@@ -188,10 +188,10 @@ Partial Public Class dsScreeningReport
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
     Friend Overloads Sub InitVars(ByVal initTable As Boolean)
-        Me.tableVwScreening = CType(MyBase.Tables("VwScreening"),VwScreeningDataTable)
+        Me.tableRptScreening = CType(MyBase.Tables("RptScreening"),RptScreeningDataTable)
         If (initTable = true) Then
-            If (Not (Me.tableVwScreening) Is Nothing) Then
-                Me.tableVwScreening.InitVars
+            If (Not (Me.tableRptScreening) Is Nothing) Then
+                Me.tableRptScreening.InitVars
             End If
         End If
     End Sub
@@ -204,13 +204,13 @@ Partial Public Class dsScreeningReport
         Me.Namespace = "http://tempuri.org/dsScreeningReport.xsd"
         Me.EnforceConstraints = true
         Me.SchemaSerializationMode = Global.System.Data.SchemaSerializationMode.IncludeSchema
-        Me.tableVwScreening = New VwScreeningDataTable()
-        MyBase.Tables.Add(Me.tableVwScreening)
+        Me.tableRptScreening = New RptScreeningDataTable()
+        MyBase.Tables.Add(Me.tableRptScreening)
     End Sub
     
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-    Private Function ShouldSerializeVwScreening() As Boolean
+    Private Function ShouldSerializeRptScreening() As Boolean
         Return false
     End Function
     
@@ -273,25 +273,23 @@ Partial Public Class dsScreeningReport
     End Function
     
     <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-    Public Delegate Sub VwScreeningRowChangeEventHandler(ByVal sender As Object, ByVal e As VwScreeningRowChangeEvent)
+    Public Delegate Sub RptScreeningRowChangeEventHandler(ByVal sender As Object, ByVal e As RptScreeningRowChangeEvent)
     
     '''<summary>
     '''Represents the strongly named DataTable class.
     '''</summary>
     <Global.System.Serializable(),  _
      Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")>  _
-    Partial Public Class VwScreeningDataTable
-        Inherits Global.System.Data.TypedTableBase(Of VwScreeningRow)
+    Partial Public Class RptScreeningDataTable
+        Inherits Global.System.Data.TypedTableBase(Of RptScreeningRow)
         
         Private columnScreenId As Global.System.Data.DataColumn
         
         Private columnScreenDate As Global.System.Data.DataColumn
         
-        Private columnScreenBy As Global.System.Data.DataColumn
+        Private columnMedCertDate As Global.System.Data.DataColumn
         
         Private columnEmployeeId As Global.System.Data.DataColumn
-        
-        Private columnEmployeeCode As Global.System.Data.DataColumn
         
         Private columnEmployeeName As Global.System.Data.DataColumn
         
@@ -311,17 +309,11 @@ Partial Public Class dsScreeningReport
         
         Private columnIsFitToWork As Global.System.Data.DataColumn
         
-        Private columnIsUsed As Global.System.Data.DataColumn
-        
-        Private columnModifiedBy As Global.System.Data.DataColumn
-        
-        Private columnModifiedDate As Global.System.Data.DataColumn
-        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub New()
             MyBase.New
-            Me.TableName = "VwScreening"
+            Me.TableName = "RptScreening"
             Me.BeginInit
             Me.InitClass
             Me.EndInit
@@ -370,9 +362,9 @@ Partial Public Class dsScreeningReport
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public ReadOnly Property ScreenByColumn() As Global.System.Data.DataColumn
+        Public ReadOnly Property MedCertDateColumn() As Global.System.Data.DataColumn
             Get
-                Return Me.columnScreenBy
+                Return Me.columnMedCertDate
             End Get
         End Property
         
@@ -381,14 +373,6 @@ Partial Public Class dsScreeningReport
         Public ReadOnly Property EmployeeIdColumn() As Global.System.Data.DataColumn
             Get
                 Return Me.columnEmployeeId
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public ReadOnly Property EmployeeCodeColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnEmployeeCode
             End Get
         End Property
         
@@ -465,30 +449,6 @@ Partial Public Class dsScreeningReport
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public ReadOnly Property IsUsedColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnIsUsed
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public ReadOnly Property ModifiedByColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnModifiedBy
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public ReadOnly Property ModifiedDateColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnModifiedDate
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -499,67 +459,44 @@ Partial Public Class dsScreeningReport
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Default ReadOnly Property Item(ByVal index As Integer) As VwScreeningRow
+        Public Default ReadOnly Property Item(ByVal index As Integer) As RptScreeningRow
             Get
-                Return CType(Me.Rows(index),VwScreeningRow)
+                Return CType(Me.Rows(index),RptScreeningRow)
             End Get
         End Property
         
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Event VwScreeningRowChanging As VwScreeningRowChangeEventHandler
+        Public Event RptScreeningRowChanging As RptScreeningRowChangeEventHandler
         
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Event VwScreeningRowChanged As VwScreeningRowChangeEventHandler
+        Public Event RptScreeningRowChanged As RptScreeningRowChangeEventHandler
         
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Event VwScreeningRowDeleting As VwScreeningRowChangeEventHandler
+        Public Event RptScreeningRowDeleting As RptScreeningRowChangeEventHandler
         
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Event VwScreeningRowDeleted As VwScreeningRowChangeEventHandler
+        Public Event RptScreeningRowDeleted As RptScreeningRowChangeEventHandler
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Overloads Sub AddVwScreeningRow(ByVal row As VwScreeningRow)
+        Public Overloads Sub AddRptScreeningRow(ByVal row As RptScreeningRow)
             Me.Rows.Add(row)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Overloads Function AddVwScreeningRow( _
-                    ByVal ScreenId As Integer,  _
-                    ByVal ScreenDate As Date,  _
-                    ByVal ScreenBy As Integer,  _
-                    ByVal EmployeeId As Integer,  _
-                    ByVal EmployeeCode As String,  _
-                    ByVal EmployeeName As String,  _
-                    ByVal AbsentFrom As Date,  _
-                    ByVal AbsentTo As Date,  _
-                    ByVal Quantity As Double,  _
-                    ByVal LeaveTypeId As Integer,  _
-                    ByVal LeaveTypeName As String,  _
-                    ByVal Reason As String,  _
-                    ByVal Diagnosis As String,  _
-                    ByVal IsFitToWork As Boolean,  _
-                    ByVal IsUsed As Boolean,  _
-                    ByVal ModifiedBy As Integer,  _
-                    ByVal ModifiedDate As Date) As VwScreeningRow
-            Dim rowVwScreeningRow As VwScreeningRow = CType(Me.NewRow,VwScreeningRow)
-            Dim columnValuesArray() As Object = New Object() {ScreenId, ScreenDate, ScreenBy, EmployeeId, EmployeeCode, EmployeeName, AbsentFrom, AbsentTo, Quantity, LeaveTypeId, LeaveTypeName, Reason, Diagnosis, IsFitToWork, IsUsed, ModifiedBy, ModifiedDate}
-            rowVwScreeningRow.ItemArray = columnValuesArray
-            Me.Rows.Add(rowVwScreeningRow)
-            Return rowVwScreeningRow
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Function FindByScreenId(ByVal ScreenId As Integer) As VwScreeningRow
-            Return CType(Me.Rows.Find(New Object() {ScreenId}),VwScreeningRow)
+        Public Overloads Function AddRptScreeningRow(ByVal ScreenId As String, ByVal ScreenDate As String, ByVal MedCertDate As String, ByVal EmployeeId As String, ByVal EmployeeName As String, ByVal AbsentFrom As String, ByVal AbsentTo As String, ByVal Quantity As String, ByVal LeaveTypeId As String, ByVal LeaveTypeName As String, ByVal Reason As String, ByVal Diagnosis As String, ByVal IsFitToWork As String) As RptScreeningRow
+            Dim rowRptScreeningRow As RptScreeningRow = CType(Me.NewRow,RptScreeningRow)
+            Dim columnValuesArray() As Object = New Object() {ScreenId, ScreenDate, MedCertDate, EmployeeId, EmployeeName, AbsentFrom, AbsentTo, Quantity, LeaveTypeId, LeaveTypeName, Reason, Diagnosis, IsFitToWork}
+            rowRptScreeningRow.ItemArray = columnValuesArray
+            Me.Rows.Add(rowRptScreeningRow)
+            Return rowRptScreeningRow
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Overrides Function Clone() As Global.System.Data.DataTable
-            Dim cln As VwScreeningDataTable = CType(MyBase.Clone,VwScreeningDataTable)
+            Dim cln As RptScreeningDataTable = CType(MyBase.Clone,RptScreeningDataTable)
             cln.InitVars
             Return cln
         End Function
@@ -567,7 +504,7 @@ Partial Public Class dsScreeningReport
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Protected Overrides Function CreateInstance() As Global.System.Data.DataTable
-            Return New VwScreeningDataTable()
+            Return New RptScreeningDataTable()
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -575,9 +512,8 @@ Partial Public Class dsScreeningReport
         Friend Sub InitVars()
             Me.columnScreenId = MyBase.Columns("ScreenId")
             Me.columnScreenDate = MyBase.Columns("ScreenDate")
-            Me.columnScreenBy = MyBase.Columns("ScreenBy")
+            Me.columnMedCertDate = MyBase.Columns("MedCertDate")
             Me.columnEmployeeId = MyBase.Columns("EmployeeId")
-            Me.columnEmployeeCode = MyBase.Columns("EmployeeCode")
             Me.columnEmployeeName = MyBase.Columns("EmployeeName")
             Me.columnAbsentFrom = MyBase.Columns("AbsentFrom")
             Me.columnAbsentTo = MyBase.Columns("AbsentTo")
@@ -587,33 +523,28 @@ Partial Public Class dsScreeningReport
             Me.columnReason = MyBase.Columns("Reason")
             Me.columnDiagnosis = MyBase.Columns("Diagnosis")
             Me.columnIsFitToWork = MyBase.Columns("IsFitToWork")
-            Me.columnIsUsed = MyBase.Columns("IsUsed")
-            Me.columnModifiedBy = MyBase.Columns("ModifiedBy")
-            Me.columnModifiedDate = MyBase.Columns("ModifiedDate")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Private Sub InitClass()
-            Me.columnScreenId = New Global.System.Data.DataColumn("ScreenId", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnScreenId = New Global.System.Data.DataColumn("ScreenId", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnScreenId)
-            Me.columnScreenDate = New Global.System.Data.DataColumn("ScreenDate", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnScreenDate = New Global.System.Data.DataColumn("ScreenDate", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnScreenDate)
-            Me.columnScreenBy = New Global.System.Data.DataColumn("ScreenBy", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnScreenBy)
-            Me.columnEmployeeId = New Global.System.Data.DataColumn("EmployeeId", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnMedCertDate = New Global.System.Data.DataColumn("MedCertDate", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnMedCertDate)
+            Me.columnEmployeeId = New Global.System.Data.DataColumn("EmployeeId", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnEmployeeId)
-            Me.columnEmployeeCode = New Global.System.Data.DataColumn("EmployeeCode", GetType(String), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnEmployeeCode)
             Me.columnEmployeeName = New Global.System.Data.DataColumn("EmployeeName", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnEmployeeName)
-            Me.columnAbsentFrom = New Global.System.Data.DataColumn("AbsentFrom", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnAbsentFrom = New Global.System.Data.DataColumn("AbsentFrom", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnAbsentFrom)
-            Me.columnAbsentTo = New Global.System.Data.DataColumn("AbsentTo", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnAbsentTo = New Global.System.Data.DataColumn("AbsentTo", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnAbsentTo)
-            Me.columnQuantity = New Global.System.Data.DataColumn("Quantity", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnQuantity = New Global.System.Data.DataColumn("Quantity", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnQuantity)
-            Me.columnLeaveTypeId = New Global.System.Data.DataColumn("LeaveTypeId", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnLeaveTypeId = New Global.System.Data.DataColumn("LeaveTypeId", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnLeaveTypeId)
             Me.columnLeaveTypeName = New Global.System.Data.DataColumn("LeaveTypeName", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnLeaveTypeName)
@@ -621,61 +552,34 @@ Partial Public Class dsScreeningReport
             MyBase.Columns.Add(Me.columnReason)
             Me.columnDiagnosis = New Global.System.Data.DataColumn("Diagnosis", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnDiagnosis)
-            Me.columnIsFitToWork = New Global.System.Data.DataColumn("IsFitToWork", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnIsFitToWork = New Global.System.Data.DataColumn("IsFitToWork", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnIsFitToWork)
-            Me.columnIsUsed = New Global.System.Data.DataColumn("IsUsed", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnIsUsed)
-            Me.columnModifiedBy = New Global.System.Data.DataColumn("ModifiedBy", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnModifiedBy)
-            Me.columnModifiedDate = New Global.System.Data.DataColumn("ModifiedDate", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnModifiedDate)
-            Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnScreenId}, true))
-            Me.columnScreenId.AllowDBNull = false
-            Me.columnScreenId.Unique = true
-            Me.columnScreenDate.AllowDBNull = false
-            Me.columnScreenBy.AllowDBNull = false
-            Me.columnEmployeeCode.ReadOnly = true
-            Me.columnEmployeeCode.MaxLength = 8
-            Me.columnEmployeeName.ReadOnly = true
-            Me.columnEmployeeName.MaxLength = 50
-            Me.columnAbsentFrom.AllowDBNull = false
-            Me.columnAbsentTo.AllowDBNull = false
-            Me.columnQuantity.AllowDBNull = false
-            Me.columnLeaveTypeId.AllowDBNull = false
-            Me.columnLeaveTypeName.ReadOnly = true
-            Me.columnLeaveTypeName.MaxLength = 30
-            Me.columnReason.ReadOnly = true
-            Me.columnReason.MaxLength = 500
-            Me.columnDiagnosis.ReadOnly = true
-            Me.columnDiagnosis.MaxLength = 500
-            Me.columnIsFitToWork.AllowDBNull = false
-            Me.columnIsUsed.AllowDBNull = false
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Function NewVwScreeningRow() As VwScreeningRow
-            Return CType(Me.NewRow,VwScreeningRow)
+        Public Function NewRptScreeningRow() As RptScreeningRow
+            Return CType(Me.NewRow,RptScreeningRow)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Protected Overrides Function NewRowFromBuilder(ByVal builder As Global.System.Data.DataRowBuilder) As Global.System.Data.DataRow
-            Return New VwScreeningRow(builder)
+            Return New RptScreeningRow(builder)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Protected Overrides Function GetRowType() As Global.System.Type
-            Return GetType(VwScreeningRow)
+            Return GetType(RptScreeningRow)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Protected Overrides Sub OnRowChanged(ByVal e As Global.System.Data.DataRowChangeEventArgs)
             MyBase.OnRowChanged(e)
-            If (Not (Me.VwScreeningRowChangedEvent) Is Nothing) Then
-                RaiseEvent VwScreeningRowChanged(Me, New VwScreeningRowChangeEvent(CType(e.Row,VwScreeningRow), e.Action))
+            If (Not (Me.RptScreeningRowChangedEvent) Is Nothing) Then
+                RaiseEvent RptScreeningRowChanged(Me, New RptScreeningRowChangeEvent(CType(e.Row,RptScreeningRow), e.Action))
             End If
         End Sub
         
@@ -683,8 +587,8 @@ Partial Public Class dsScreeningReport
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Protected Overrides Sub OnRowChanging(ByVal e As Global.System.Data.DataRowChangeEventArgs)
             MyBase.OnRowChanging(e)
-            If (Not (Me.VwScreeningRowChangingEvent) Is Nothing) Then
-                RaiseEvent VwScreeningRowChanging(Me, New VwScreeningRowChangeEvent(CType(e.Row,VwScreeningRow), e.Action))
+            If (Not (Me.RptScreeningRowChangingEvent) Is Nothing) Then
+                RaiseEvent RptScreeningRowChanging(Me, New RptScreeningRowChangeEvent(CType(e.Row,RptScreeningRow), e.Action))
             End If
         End Sub
         
@@ -692,8 +596,8 @@ Partial Public Class dsScreeningReport
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Protected Overrides Sub OnRowDeleted(ByVal e As Global.System.Data.DataRowChangeEventArgs)
             MyBase.OnRowDeleted(e)
-            If (Not (Me.VwScreeningRowDeletedEvent) Is Nothing) Then
-                RaiseEvent VwScreeningRowDeleted(Me, New VwScreeningRowChangeEvent(CType(e.Row,VwScreeningRow), e.Action))
+            If (Not (Me.RptScreeningRowDeletedEvent) Is Nothing) Then
+                RaiseEvent RptScreeningRowDeleted(Me, New RptScreeningRowChangeEvent(CType(e.Row,RptScreeningRow), e.Action))
             End If
         End Sub
         
@@ -701,14 +605,14 @@ Partial Public Class dsScreeningReport
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Protected Overrides Sub OnRowDeleting(ByVal e As Global.System.Data.DataRowChangeEventArgs)
             MyBase.OnRowDeleting(e)
-            If (Not (Me.VwScreeningRowDeletingEvent) Is Nothing) Then
-                RaiseEvent VwScreeningRowDeleting(Me, New VwScreeningRowChangeEvent(CType(e.Row,VwScreeningRow), e.Action))
+            If (Not (Me.RptScreeningRowDeletingEvent) Is Nothing) Then
+                RaiseEvent RptScreeningRowDeleting(Me, New RptScreeningRowChangeEvent(CType(e.Row,RptScreeningRow), e.Action))
             End If
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Sub RemoveVwScreeningRow(ByVal row As VwScreeningRow)
+        Public Sub RemoveRptScreeningRow(ByVal row As RptScreeningRow)
             Me.Rows.Remove(row)
         End Sub
         
@@ -735,7 +639,7 @@ Partial Public Class dsScreeningReport
             type.Attributes.Add(attribute1)
             Dim attribute2 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
             attribute2.Name = "tableTypeName"
-            attribute2.FixedValue = "VwScreeningDataTable"
+            attribute2.FixedValue = "RptScreeningDataTable"
             type.Attributes.Add(attribute2)
             type.Particle = sequence
             Dim dsSchema As Global.System.Xml.Schema.XmlSchema = ds.GetSchemaSerializable
@@ -782,78 +686,75 @@ Partial Public Class dsScreeningReport
     '''<summary>
     '''Represents strongly named DataRow class.
     '''</summary>
-    Partial Public Class VwScreeningRow
+    Partial Public Class RptScreeningRow
         Inherits Global.System.Data.DataRow
         
-        Private tableVwScreening As VwScreeningDataTable
+        Private tableRptScreening As RptScreeningDataTable
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Friend Sub New(ByVal rb As Global.System.Data.DataRowBuilder)
             MyBase.New(rb)
-            Me.tableVwScreening = CType(Me.Table,VwScreeningDataTable)
+            Me.tableRptScreening = CType(Me.Table,RptScreeningDataTable)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property ScreenId() As Integer
-            Get
-                Return CType(Me(Me.tableVwScreening.ScreenIdColumn),Integer)
-            End Get
-            Set
-                Me(Me.tableVwScreening.ScreenIdColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property ScreenDate() As Date
-            Get
-                Return CType(Me(Me.tableVwScreening.ScreenDateColumn),Date)
-            End Get
-            Set
-                Me(Me.tableVwScreening.ScreenDateColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property ScreenBy() As Integer
-            Get
-                Return CType(Me(Me.tableVwScreening.ScreenByColumn),Integer)
-            End Get
-            Set
-                Me(Me.tableVwScreening.ScreenByColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property EmployeeId() As Integer
+        Public Property ScreenId() As String
             Get
                 Try 
-                    Return CType(Me(Me.tableVwScreening.EmployeeIdColumn),Integer)
+                    Return CType(Me(Me.tableRptScreening.ScreenIdColumn),String)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'EmployeeId' in table 'VwScreening' is DBNull.", e)
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'ScreenId' in table 'RptScreening' is DBNull.", e)
                 End Try
             End Get
             Set
-                Me(Me.tableVwScreening.EmployeeIdColumn) = value
+                Me(Me.tableRptScreening.ScreenIdColumn) = value
             End Set
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property EmployeeCode() As String
+        Public Property ScreenDate() As String
             Get
                 Try 
-                    Return CType(Me(Me.tableVwScreening.EmployeeCodeColumn),String)
+                    Return CType(Me(Me.tableRptScreening.ScreenDateColumn),String)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'EmployeeCode' in table 'VwScreening' is DBNull.", e)
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'ScreenDate' in table 'RptScreening' is DBNull.", e)
                 End Try
             End Get
             Set
-                Me(Me.tableVwScreening.EmployeeCodeColumn) = value
+                Me(Me.tableRptScreening.ScreenDateColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property MedCertDate() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableRptScreening.MedCertDateColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'MedCertDate' in table 'RptScreening' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableRptScreening.MedCertDateColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property EmployeeId() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableRptScreening.EmployeeIdColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'EmployeeId' in table 'RptScreening' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableRptScreening.EmployeeIdColumn) = value
             End Set
         End Property
         
@@ -862,57 +763,73 @@ Partial Public Class dsScreeningReport
         Public Property EmployeeName() As String
             Get
                 Try 
-                    Return CType(Me(Me.tableVwScreening.EmployeeNameColumn),String)
+                    Return CType(Me(Me.tableRptScreening.EmployeeNameColumn),String)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'EmployeeName' in table 'VwScreening' is DBNull.", e)
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'EmployeeName' in table 'RptScreening' is DBNull.", e)
                 End Try
             End Get
             Set
-                Me(Me.tableVwScreening.EmployeeNameColumn) = value
+                Me(Me.tableRptScreening.EmployeeNameColumn) = value
             End Set
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property AbsentFrom() As Date
+        Public Property AbsentFrom() As String
             Get
-                Return CType(Me(Me.tableVwScreening.AbsentFromColumn),Date)
+                Try 
+                    Return CType(Me(Me.tableRptScreening.AbsentFromColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'AbsentFrom' in table 'RptScreening' is DBNull.", e)
+                End Try
             End Get
             Set
-                Me(Me.tableVwScreening.AbsentFromColumn) = value
+                Me(Me.tableRptScreening.AbsentFromColumn) = value
             End Set
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property AbsentTo() As Date
+        Public Property AbsentTo() As String
             Get
-                Return CType(Me(Me.tableVwScreening.AbsentToColumn),Date)
+                Try 
+                    Return CType(Me(Me.tableRptScreening.AbsentToColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'AbsentTo' in table 'RptScreening' is DBNull.", e)
+                End Try
             End Get
             Set
-                Me(Me.tableVwScreening.AbsentToColumn) = value
+                Me(Me.tableRptScreening.AbsentToColumn) = value
             End Set
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property Quantity() As Double
+        Public Property Quantity() As String
             Get
-                Return CType(Me(Me.tableVwScreening.QuantityColumn),Double)
+                Try 
+                    Return CType(Me(Me.tableRptScreening.QuantityColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Quantity' in table 'RptScreening' is DBNull.", e)
+                End Try
             End Get
             Set
-                Me(Me.tableVwScreening.QuantityColumn) = value
+                Me(Me.tableRptScreening.QuantityColumn) = value
             End Set
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property LeaveTypeId() As Integer
+        Public Property LeaveTypeId() As String
             Get
-                Return CType(Me(Me.tableVwScreening.LeaveTypeIdColumn),Integer)
+                Try 
+                    Return CType(Me(Me.tableRptScreening.LeaveTypeIdColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'LeaveTypeId' in table 'RptScreening' is DBNull.", e)
+                End Try
             End Get
             Set
-                Me(Me.tableVwScreening.LeaveTypeIdColumn) = value
+                Me(Me.tableRptScreening.LeaveTypeIdColumn) = value
             End Set
         End Property
         
@@ -921,13 +838,13 @@ Partial Public Class dsScreeningReport
         Public Property LeaveTypeName() As String
             Get
                 Try 
-                    Return CType(Me(Me.tableVwScreening.LeaveTypeNameColumn),String)
+                    Return CType(Me(Me.tableRptScreening.LeaveTypeNameColumn),String)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'LeaveTypeName' in table 'VwScreening' is DBNull.", e)
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'LeaveTypeName' in table 'RptScreening' is DBNull.", e)
                 End Try
             End Get
             Set
-                Me(Me.tableVwScreening.LeaveTypeNameColumn) = value
+                Me(Me.tableRptScreening.LeaveTypeNameColumn) = value
             End Set
         End Property
         
@@ -936,13 +853,13 @@ Partial Public Class dsScreeningReport
         Public Property Reason() As String
             Get
                 Try 
-                    Return CType(Me(Me.tableVwScreening.ReasonColumn),String)
+                    Return CType(Me(Me.tableRptScreening.ReasonColumn),String)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'Reason' in table 'VwScreening' is DBNull.", e)
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Reason' in table 'RptScreening' is DBNull.", e)
                 End Try
             End Get
             Set
-                Me(Me.tableVwScreening.ReasonColumn) = value
+                Me(Me.tableRptScreening.ReasonColumn) = value
             End Set
         End Property
         
@@ -951,162 +868,185 @@ Partial Public Class dsScreeningReport
         Public Property Diagnosis() As String
             Get
                 Try 
-                    Return CType(Me(Me.tableVwScreening.DiagnosisColumn),String)
+                    Return CType(Me(Me.tableRptScreening.DiagnosisColumn),String)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'Diagnosis' in table 'VwScreening' is DBNull.", e)
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Diagnosis' in table 'RptScreening' is DBNull.", e)
                 End Try
             End Get
             Set
-                Me(Me.tableVwScreening.DiagnosisColumn) = value
+                Me(Me.tableRptScreening.DiagnosisColumn) = value
             End Set
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property IsFitToWork() As Boolean
-            Get
-                Return CType(Me(Me.tableVwScreening.IsFitToWorkColumn),Boolean)
-            End Get
-            Set
-                Me(Me.tableVwScreening.IsFitToWorkColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property IsUsed() As Boolean
-            Get
-                Return CType(Me(Me.tableVwScreening.IsUsedColumn),Boolean)
-            End Get
-            Set
-                Me(Me.tableVwScreening.IsUsedColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property ModifiedBy() As Integer
+        Public Property IsFitToWork() As String
             Get
                 Try 
-                    Return CType(Me(Me.tableVwScreening.ModifiedByColumn),Integer)
+                    Return CType(Me(Me.tableRptScreening.IsFitToWorkColumn),String)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'ModifiedBy' in table 'VwScreening' is DBNull.", e)
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'IsFitToWork' in table 'RptScreening' is DBNull.", e)
                 End Try
             End Get
             Set
-                Me(Me.tableVwScreening.ModifiedByColumn) = value
+                Me(Me.tableRptScreening.IsFitToWorkColumn) = value
             End Set
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property ModifiedDate() As Date
-            Get
-                Try 
-                    Return CType(Me(Me.tableVwScreening.ModifiedDateColumn),Date)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'ModifiedDate' in table 'VwScreening' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableVwScreening.ModifiedDateColumn) = value
-            End Set
-        End Property
+        Public Function IsScreenIdNull() As Boolean
+            Return Me.IsNull(Me.tableRptScreening.ScreenIdColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetScreenIdNull()
+            Me(Me.tableRptScreening.ScreenIdColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsScreenDateNull() As Boolean
+            Return Me.IsNull(Me.tableRptScreening.ScreenDateColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetScreenDateNull()
+            Me(Me.tableRptScreening.ScreenDateColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsMedCertDateNull() As Boolean
+            Return Me.IsNull(Me.tableRptScreening.MedCertDateColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetMedCertDateNull()
+            Me(Me.tableRptScreening.MedCertDateColumn) = Global.System.Convert.DBNull
+        End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Function IsEmployeeIdNull() As Boolean
-            Return Me.IsNull(Me.tableVwScreening.EmployeeIdColumn)
+            Return Me.IsNull(Me.tableRptScreening.EmployeeIdColumn)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub SetEmployeeIdNull()
-            Me(Me.tableVwScreening.EmployeeIdColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Function IsEmployeeCodeNull() As Boolean
-            Return Me.IsNull(Me.tableVwScreening.EmployeeCodeColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Sub SetEmployeeCodeNull()
-            Me(Me.tableVwScreening.EmployeeCodeColumn) = Global.System.Convert.DBNull
+            Me(Me.tableRptScreening.EmployeeIdColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Function IsEmployeeNameNull() As Boolean
-            Return Me.IsNull(Me.tableVwScreening.EmployeeNameColumn)
+            Return Me.IsNull(Me.tableRptScreening.EmployeeNameColumn)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub SetEmployeeNameNull()
-            Me(Me.tableVwScreening.EmployeeNameColumn) = Global.System.Convert.DBNull
+            Me(Me.tableRptScreening.EmployeeNameColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsAbsentFromNull() As Boolean
+            Return Me.IsNull(Me.tableRptScreening.AbsentFromColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetAbsentFromNull()
+            Me(Me.tableRptScreening.AbsentFromColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsAbsentToNull() As Boolean
+            Return Me.IsNull(Me.tableRptScreening.AbsentToColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetAbsentToNull()
+            Me(Me.tableRptScreening.AbsentToColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsQuantityNull() As Boolean
+            Return Me.IsNull(Me.tableRptScreening.QuantityColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetQuantityNull()
+            Me(Me.tableRptScreening.QuantityColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsLeaveTypeIdNull() As Boolean
+            Return Me.IsNull(Me.tableRptScreening.LeaveTypeIdColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetLeaveTypeIdNull()
+            Me(Me.tableRptScreening.LeaveTypeIdColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Function IsLeaveTypeNameNull() As Boolean
-            Return Me.IsNull(Me.tableVwScreening.LeaveTypeNameColumn)
+            Return Me.IsNull(Me.tableRptScreening.LeaveTypeNameColumn)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub SetLeaveTypeNameNull()
-            Me(Me.tableVwScreening.LeaveTypeNameColumn) = Global.System.Convert.DBNull
+            Me(Me.tableRptScreening.LeaveTypeNameColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Function IsReasonNull() As Boolean
-            Return Me.IsNull(Me.tableVwScreening.ReasonColumn)
+            Return Me.IsNull(Me.tableRptScreening.ReasonColumn)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub SetReasonNull()
-            Me(Me.tableVwScreening.ReasonColumn) = Global.System.Convert.DBNull
+            Me(Me.tableRptScreening.ReasonColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Function IsDiagnosisNull() As Boolean
-            Return Me.IsNull(Me.tableVwScreening.DiagnosisColumn)
+            Return Me.IsNull(Me.tableRptScreening.DiagnosisColumn)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub SetDiagnosisNull()
-            Me(Me.tableVwScreening.DiagnosisColumn) = Global.System.Convert.DBNull
+            Me(Me.tableRptScreening.DiagnosisColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Function IsModifiedByNull() As Boolean
-            Return Me.IsNull(Me.tableVwScreening.ModifiedByColumn)
+        Public Function IsIsFitToWorkNull() As Boolean
+            Return Me.IsNull(Me.tableRptScreening.IsFitToWorkColumn)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Sub SetModifiedByNull()
-            Me(Me.tableVwScreening.ModifiedByColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Function IsModifiedDateNull() As Boolean
-            Return Me.IsNull(Me.tableVwScreening.ModifiedDateColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Sub SetModifiedDateNull()
-            Me(Me.tableVwScreening.ModifiedDateColumn) = Global.System.Convert.DBNull
+        Public Sub SetIsFitToWorkNull()
+            Me(Me.tableRptScreening.IsFitToWorkColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     
@@ -1114,16 +1054,16 @@ Partial Public Class dsScreeningReport
     '''Row event argument class
     '''</summary>
     <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-    Public Class VwScreeningRowChangeEvent
+    Public Class RptScreeningRowChangeEvent
         Inherits Global.System.EventArgs
         
-        Private eventRow As VwScreeningRow
+        Private eventRow As RptScreeningRow
         
         Private eventAction As Global.System.Data.DataRowAction
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Sub New(ByVal row As VwScreeningRow, ByVal action As Global.System.Data.DataRowAction)
+        Public Sub New(ByVal row As RptScreeningRow, ByVal action As Global.System.Data.DataRowAction)
             MyBase.New
             Me.eventRow = row
             Me.eventAction = action
@@ -1131,7 +1071,7 @@ Partial Public Class dsScreeningReport
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public ReadOnly Property Row() As VwScreeningRow
+        Public ReadOnly Property Row() As RptScreeningRow
             Get
                 Return Me.eventRow
             End Get
@@ -1146,565 +1086,3 @@ Partial Public Class dsScreeningReport
         End Property
     End Class
 End Class
-
-Namespace dsScreeningReportTableAdapters
-    
-    '''<summary>
-    '''Represents the connection and commands used to retrieve and save data.
-    '''</summary>
-    <Global.System.ComponentModel.DesignerCategoryAttribute("code"),  _
-     Global.System.ComponentModel.ToolboxItem(true),  _
-     Global.System.ComponentModel.DataObjectAttribute(true),  _
-     Global.System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner"& _ 
-        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"),  _
-     Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
-    Partial Public Class VwScreeningTableAdapter
-        Inherits Global.System.ComponentModel.Component
-        
-        Private WithEvents _adapter As Global.System.Data.SqlClient.SqlDataAdapter
-        
-        Private _connection As Global.System.Data.SqlClient.SqlConnection
-        
-        Private _transaction As Global.System.Data.SqlClient.SqlTransaction
-        
-        Private _commandCollection() As Global.System.Data.SqlClient.SqlCommand
-        
-        Private _clearBeforeFill As Boolean
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Sub New()
-            MyBase.New
-            Me.ClearBeforeFill = true
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Protected Friend ReadOnly Property Adapter() As Global.System.Data.SqlClient.SqlDataAdapter
-            Get
-                If (Me._adapter Is Nothing) Then
-                    Me.InitAdapter
-                End If
-                Return Me._adapter
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Friend Property Connection() As Global.System.Data.SqlClient.SqlConnection
-            Get
-                If (Me._connection Is Nothing) Then
-                    Me.InitConnection
-                End If
-                Return Me._connection
-            End Get
-            Set
-                Me._connection = value
-                If (Not (Me.Adapter.InsertCommand) Is Nothing) Then
-                    Me.Adapter.InsertCommand.Connection = value
-                End If
-                If (Not (Me.Adapter.DeleteCommand) Is Nothing) Then
-                    Me.Adapter.DeleteCommand.Connection = value
-                End If
-                If (Not (Me.Adapter.UpdateCommand) Is Nothing) Then
-                    Me.Adapter.UpdateCommand.Connection = value
-                End If
-                Dim i As Integer = 0
-                Do While (i < Me.CommandCollection.Length)
-                    If (Not (Me.CommandCollection(i)) Is Nothing) Then
-                        CType(Me.CommandCollection(i),Global.System.Data.SqlClient.SqlCommand).Connection = value
-                    End If
-                    i = (i + 1)
-                Loop
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Friend Property Transaction() As Global.System.Data.SqlClient.SqlTransaction
-            Get
-                Return Me._transaction
-            End Get
-            Set
-                Me._transaction = value
-                Dim i As Integer = 0
-                Do While (i < Me.CommandCollection.Length)
-                    Me.CommandCollection(i).Transaction = Me._transaction
-                    i = (i + 1)
-                Loop
-                If ((Not (Me.Adapter) Is Nothing)  _
-                            AndAlso (Not (Me.Adapter.DeleteCommand) Is Nothing)) Then
-                    Me.Adapter.DeleteCommand.Transaction = Me._transaction
-                End If
-                If ((Not (Me.Adapter) Is Nothing)  _
-                            AndAlso (Not (Me.Adapter.InsertCommand) Is Nothing)) Then
-                    Me.Adapter.InsertCommand.Transaction = Me._transaction
-                End If
-                If ((Not (Me.Adapter) Is Nothing)  _
-                            AndAlso (Not (Me.Adapter.UpdateCommand) Is Nothing)) Then
-                    Me.Adapter.UpdateCommand.Transaction = Me._transaction
-                End If
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Protected ReadOnly Property CommandCollection() As Global.System.Data.SqlClient.SqlCommand()
-            Get
-                If (Me._commandCollection Is Nothing) Then
-                    Me.InitCommandCollection
-                End If
-                Return Me._commandCollection
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property ClearBeforeFill() As Boolean
-            Get
-                Return Me._clearBeforeFill
-            End Get
-            Set
-                Me._clearBeforeFill = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Private Sub InitAdapter()
-            Me._adapter = New Global.System.Data.SqlClient.SqlDataAdapter()
-            Dim tableMapping As Global.System.Data.Common.DataTableMapping = New Global.System.Data.Common.DataTableMapping()
-            tableMapping.SourceTable = "Table"
-            tableMapping.DataSetTable = "VwScreening"
-            tableMapping.ColumnMappings.Add("ScreenId", "ScreenId")
-            tableMapping.ColumnMappings.Add("ScreenDate", "ScreenDate")
-            tableMapping.ColumnMappings.Add("ScreenBy", "ScreenBy")
-            tableMapping.ColumnMappings.Add("EmployeeId", "EmployeeId")
-            tableMapping.ColumnMappings.Add("EmployeeCode", "EmployeeCode")
-            tableMapping.ColumnMappings.Add("EmployeeName", "EmployeeName")
-            tableMapping.ColumnMappings.Add("AbsentFrom", "AbsentFrom")
-            tableMapping.ColumnMappings.Add("AbsentTo", "AbsentTo")
-            tableMapping.ColumnMappings.Add("Quantity", "Quantity")
-            tableMapping.ColumnMappings.Add("LeaveTypeId", "LeaveTypeId")
-            tableMapping.ColumnMappings.Add("LeaveTypeName", "LeaveTypeName")
-            tableMapping.ColumnMappings.Add("Reason", "Reason")
-            tableMapping.ColumnMappings.Add("Diagnosis", "Diagnosis")
-            tableMapping.ColumnMappings.Add("IsFitToWork", "IsFitToWork")
-            tableMapping.ColumnMappings.Add("IsUsed", "IsUsed")
-            tableMapping.ColumnMappings.Add("ModifiedBy", "ModifiedBy")
-            tableMapping.ColumnMappings.Add("ModifiedDate", "ModifiedDate")
-            Me._adapter.TableMappings.Add(tableMapping)
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Private Sub InitConnection()
-            Me._connection = New Global.System.Data.SqlClient.SqlConnection()
-            Me._connection.ConnectionString = Global.SickLeaveScreening.My.MySettings.Default.LeaveConnectionStringRpt
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Private Sub InitCommandCollection()
-            Me._commandCollection = New Global.System.Data.SqlClient.SqlCommand(0) {}
-            Me._commandCollection(0) = New Global.System.Data.SqlClient.SqlCommand()
-            Me._commandCollection(0).Connection = Me.Connection
-            Me._commandCollection(0).CommandText = "SELECT ScreenId, ScreenDate, ScreenBy, EmployeeId, EmployeeCode, EmployeeName, Ab"& _ 
-                "sentFrom, AbsentTo, Quantity, LeaveTypeId, LeaveTypeName, Reason, Diagnosis, IsF"& _ 
-                "itToWork, IsUsed, ModifiedBy, ModifiedDate FROM dbo.VwScreening"
-            Me._commandCollection(0).CommandType = Global.System.Data.CommandType.Text
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
-         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
-         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Fill, true)>  _
-        Public Overloads Overridable Function Fill(ByVal dataTable As dsScreeningReport.VwScreeningDataTable) As Integer
-            Me.Adapter.SelectCommand = Me.CommandCollection(0)
-            If (Me.ClearBeforeFill = true) Then
-                dataTable.Clear
-            End If
-            Dim returnValue As Integer = Me.Adapter.Fill(dataTable)
-            Return returnValue
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
-         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
-         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.[Select], true)>  _
-        Public Overloads Overridable Function GetData() As dsScreeningReport.VwScreeningDataTable
-            Me.Adapter.SelectCommand = Me.CommandCollection(0)
-            Dim dataTable As dsScreeningReport.VwScreeningDataTable = New dsScreeningReport.VwScreeningDataTable()
-            Me.Adapter.Fill(dataTable)
-            Return dataTable
-        End Function
-    End Class
-    
-    '''<summary>
-    '''TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
-    '''</summary>
-    <Global.System.ComponentModel.DesignerCategoryAttribute("code"),  _
-     Global.System.ComponentModel.ToolboxItem(true),  _
-     Global.System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerDesigner, Microsoft.VSD"& _ 
-        "esigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"),  _
-     Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapterManager")>  _
-    Partial Public Class TableAdapterManager
-        Inherits Global.System.ComponentModel.Component
-        
-        Private _updateOrder As UpdateOrderOption
-        
-        Private _backupDataSetBeforeUpdate As Boolean
-        
-        Private _connection As Global.System.Data.IDbConnection
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property UpdateOrder() As UpdateOrderOption
-            Get
-                Return Me._updateOrder
-            End Get
-            Set
-                Me._updateOrder = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property BackupDataSetBeforeUpdate() As Boolean
-            Get
-                Return Me._backupDataSetBeforeUpdate
-            End Get
-            Set
-                Me._backupDataSetBeforeUpdate = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
-         Global.System.ComponentModel.Browsable(false)>  _
-        Public Property Connection() As Global.System.Data.IDbConnection
-            Get
-                If (Not (Me._connection) Is Nothing) Then
-                    Return Me._connection
-                End If
-                Return Nothing
-            End Get
-            Set
-                Me._connection = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
-         Global.System.ComponentModel.Browsable(false)>  _
-        Public ReadOnly Property TableAdapterInstanceCount() As Integer
-            Get
-                Dim count As Integer = 0
-                Return count
-            End Get
-        End Property
-        
-        '''<summary>
-        '''Update rows in top-down order.
-        '''</summary>
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Private Function UpdateUpdatedRows(ByVal dataSet As dsScreeningReport, ByVal allChangedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow), ByVal allAddedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow)) As Integer
-            Dim result As Integer = 0
-            Return result
-        End Function
-        
-        '''<summary>
-        '''Insert rows in top-down order.
-        '''</summary>
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Private Function UpdateInsertedRows(ByVal dataSet As dsScreeningReport, ByVal allAddedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow)) As Integer
-            Dim result As Integer = 0
-            Return result
-        End Function
-        
-        '''<summary>
-        '''Delete rows in bottom-up order.
-        '''</summary>
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Private Function UpdateDeletedRows(ByVal dataSet As dsScreeningReport, ByVal allChangedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow)) As Integer
-            Dim result As Integer = 0
-            Return result
-        End Function
-        
-        '''<summary>
-        '''Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
-        '''</summary>
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Private Function GetRealUpdatedRows(ByVal updatedRows() As Global.System.Data.DataRow, ByVal allAddedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow)) As Global.System.Data.DataRow()
-            If ((updatedRows Is Nothing)  _
-                        OrElse (updatedRows.Length < 1)) Then
-                Return updatedRows
-            End If
-            If ((allAddedRows Is Nothing)  _
-                        OrElse (allAddedRows.Count < 1)) Then
-                Return updatedRows
-            End If
-            Dim realUpdatedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow) = New Global.System.Collections.Generic.List(Of Global.System.Data.DataRow)()
-            Dim i As Integer = 0
-            Do While (i < updatedRows.Length)
-                Dim row As Global.System.Data.DataRow = updatedRows(i)
-                If (allAddedRows.Contains(row) = false) Then
-                    realUpdatedRows.Add(row)
-                End If
-                i = (i + 1)
-            Loop
-            Return realUpdatedRows.ToArray
-        End Function
-        
-        '''<summary>
-        '''Update all changes to the dataset.
-        '''</summary>
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Overridable Function UpdateAll(ByVal dataSet As dsScreeningReport) As Integer
-            If (dataSet Is Nothing) Then
-                Throw New Global.System.ArgumentNullException("dataSet")
-            End If
-            If (dataSet.HasChanges = false) Then
-                Return 0
-            End If
-            Dim workConnection As Global.System.Data.IDbConnection = Me.Connection
-            If (workConnection Is Nothing) Then
-                Throw New Global.System.ApplicationException("TableAdapterManager contains no connection information. Set each TableAdapterMana"& _ 
-                        "ger TableAdapter property to a valid TableAdapter instance.")
-            End If
-            Dim workConnOpened As Boolean = false
-            If ((workConnection.State And Global.System.Data.ConnectionState.Broken)  _
-                        = Global.System.Data.ConnectionState.Broken) Then
-                workConnection.Close
-            End If
-            If (workConnection.State = Global.System.Data.ConnectionState.Closed) Then
-                workConnection.Open
-                workConnOpened = true
-            End If
-            Dim workTransaction As Global.System.Data.IDbTransaction = workConnection.BeginTransaction
-            If (workTransaction Is Nothing) Then
-                Throw New Global.System.ApplicationException("The transaction cannot begin. The current data connection does not support transa"& _ 
-                        "ctions or the current state is not allowing the transaction to begin.")
-            End If
-            Dim allChangedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow) = New Global.System.Collections.Generic.List(Of Global.System.Data.DataRow)()
-            Dim allAddedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow) = New Global.System.Collections.Generic.List(Of Global.System.Data.DataRow)()
-            Dim adaptersWithAcceptChangesDuringUpdate As Global.System.Collections.Generic.List(Of Global.System.Data.Common.DataAdapter) = New Global.System.Collections.Generic.List(Of Global.System.Data.Common.DataAdapter)()
-            Dim revertConnections As Global.System.Collections.Generic.Dictionary(Of Object, Global.System.Data.IDbConnection) = New Global.System.Collections.Generic.Dictionary(Of Object, Global.System.Data.IDbConnection)()
-            Dim result As Integer = 0
-            Dim backupDataSet As Global.System.Data.DataSet = Nothing
-            If Me.BackupDataSetBeforeUpdate Then
-                backupDataSet = New Global.System.Data.DataSet()
-                backupDataSet.Merge(dataSet)
-            End If
-            Try 
-                '---- Prepare for update -----------
-                '
-                '
-                '---- Perform updates -----------
-                '
-                If (Me.UpdateOrder = UpdateOrderOption.UpdateInsertDelete) Then
-                    result = (result + Me.UpdateUpdatedRows(dataSet, allChangedRows, allAddedRows))
-                    result = (result + Me.UpdateInsertedRows(dataSet, allAddedRows))
-                Else
-                    result = (result + Me.UpdateInsertedRows(dataSet, allAddedRows))
-                    result = (result + Me.UpdateUpdatedRows(dataSet, allChangedRows, allAddedRows))
-                End If
-                result = (result + Me.UpdateDeletedRows(dataSet, allChangedRows))
-                '
-                '---- Commit updates -----------
-                '
-                workTransaction.Commit
-                If (0 < allAddedRows.Count) Then
-                    Dim rows((allAddedRows.Count) - 1) As Global.System.Data.DataRow
-                    allAddedRows.CopyTo(rows)
-                    Dim i As Integer = 0
-                    Do While (i < rows.Length)
-                        Dim row As Global.System.Data.DataRow = rows(i)
-                        row.AcceptChanges
-                        i = (i + 1)
-                    Loop
-                End If
-                If (0 < allChangedRows.Count) Then
-                    Dim rows((allChangedRows.Count) - 1) As Global.System.Data.DataRow
-                    allChangedRows.CopyTo(rows)
-                    Dim i As Integer = 0
-                    Do While (i < rows.Length)
-                        Dim row As Global.System.Data.DataRow = rows(i)
-                        row.AcceptChanges
-                        i = (i + 1)
-                    Loop
-                End If
-            Catch ex As Global.System.Exception
-                workTransaction.Rollback
-                '---- Restore the dataset -----------
-                If Me.BackupDataSetBeforeUpdate Then
-                    Global.System.Diagnostics.Debug.Assert((Not (backupDataSet) Is Nothing))
-                    dataSet.Clear
-                    dataSet.Merge(backupDataSet)
-                Else
-                    If (0 < allAddedRows.Count) Then
-                        Dim rows((allAddedRows.Count) - 1) As Global.System.Data.DataRow
-                        allAddedRows.CopyTo(rows)
-                        Dim i As Integer = 0
-                        Do While (i < rows.Length)
-                            Dim row As Global.System.Data.DataRow = rows(i)
-                            row.AcceptChanges
-                            row.SetAdded
-                            i = (i + 1)
-                        Loop
-                    End If
-                End If
-                Throw ex
-            Finally
-                If workConnOpened Then
-                    workConnection.Close
-                End If
-                If (0 < adaptersWithAcceptChangesDuringUpdate.Count) Then
-                    Dim adapters((adaptersWithAcceptChangesDuringUpdate.Count) - 1) As Global.System.Data.Common.DataAdapter
-                    adaptersWithAcceptChangesDuringUpdate.CopyTo(adapters)
-                    Dim i As Integer = 0
-                    Do While (i < adapters.Length)
-                        Dim adapter As Global.System.Data.Common.DataAdapter = adapters(i)
-                        adapter.AcceptChangesDuringUpdate = true
-                        i = (i + 1)
-                    Loop
-                End If
-            End Try
-            Return result
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Protected Overridable Sub SortSelfReferenceRows(ByVal rows() As Global.System.Data.DataRow, ByVal relation As Global.System.Data.DataRelation, ByVal childFirst As Boolean)
-            Global.System.Array.Sort(Of Global.System.Data.DataRow)(rows, New SelfReferenceComparer(relation, childFirst))
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Protected Overridable Function MatchTableAdapterConnection(ByVal inputConnection As Global.System.Data.IDbConnection) As Boolean
-            If (Not (Me._connection) Is Nothing) Then
-                Return true
-            End If
-            If ((Me.Connection Is Nothing)  _
-                        OrElse (inputConnection Is Nothing)) Then
-                Return true
-            End If
-            If String.Equals(Me.Connection.ConnectionString, inputConnection.ConnectionString, Global.System.StringComparison.Ordinal) Then
-                Return true
-            End If
-            Return false
-        End Function
-        
-        '''<summary>
-        '''Update Order Option
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Enum UpdateOrderOption
-            
-            InsertUpdateDelete = 0
-            
-            UpdateInsertDelete = 1
-        End Enum
-        
-        '''<summary>
-        '''Used to sort self-referenced table's rows
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Private Class SelfReferenceComparer
-            Inherits Object
-            Implements Global.System.Collections.Generic.IComparer(Of Global.System.Data.DataRow)
-            
-            Private _relation As Global.System.Data.DataRelation
-            
-            Private _childFirst As Integer
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-            Friend Sub New(ByVal relation As Global.System.Data.DataRelation, ByVal childFirst As Boolean)
-                MyBase.New
-                Me._relation = relation
-                If childFirst Then
-                    Me._childFirst = -1
-                Else
-                    Me._childFirst = 1
-                End If
-            End Sub
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-            Private Function GetRoot(ByVal row As Global.System.Data.DataRow, ByRef distance As Integer) As Global.System.Data.DataRow
-                Global.System.Diagnostics.Debug.Assert((Not (row) Is Nothing))
-                Dim root As Global.System.Data.DataRow = row
-                distance = 0
-
-                Dim traversedRows As Global.System.Collections.Generic.IDictionary(Of Global.System.Data.DataRow, Global.System.Data.DataRow) = New Global.System.Collections.Generic.Dictionary(Of Global.System.Data.DataRow, Global.System.Data.DataRow)()
-                traversedRows(row) = row
-
-                Dim parent As Global.System.Data.DataRow = row.GetParentRow(Me._relation, Global.System.Data.DataRowVersion.[Default])
-
-                Do While ((Not (parent) Is Nothing)  _
-                            AndAlso (traversedRows.ContainsKey(parent) = false))
-                    distance = (distance + 1)
-                    root = parent
-                    traversedRows(parent) = parent
-                    parent = parent.GetParentRow(Me._relation, Global.System.Data.DataRowVersion.[Default])
-
-                Loop
-
-                If (distance = 0) Then
-                    traversedRows.Clear
-                    traversedRows(row) = row
-                    parent = row.GetParentRow(Me._relation, Global.System.Data.DataRowVersion.Original)
-
-                    Do While ((Not (parent) Is Nothing)  _
-                                AndAlso (traversedRows.ContainsKey(parent) = false))
-                        distance = (distance + 1)
-                        root = parent
-                        traversedRows(parent) = parent
-                        parent = parent.GetParentRow(Me._relation, Global.System.Data.DataRowVersion.Original)
-
-                    Loop
-                End If
-
-                Return root
-            End Function
-            
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-             Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-            Public Function Compare(ByVal row1 As Global.System.Data.DataRow, ByVal row2 As Global.System.Data.DataRow) As Integer Implements Global.System.Collections.Generic.IComparer(Of Global.System.Data.DataRow).Compare
-                If Object.ReferenceEquals(row1, row2) Then
-                    Return 0
-                End If
-                If (row1 Is Nothing) Then
-                    Return -1
-                End If
-                If (row2 Is Nothing) Then
-                    Return 1
-                End If
-
-                Dim distance1 As Integer = 0
-                Dim root1 As Global.System.Data.DataRow = Me.GetRoot(row1, distance1)
-
-                Dim distance2 As Integer = 0
-                Dim root2 As Global.System.Data.DataRow = Me.GetRoot(row2, distance2)
-
-                If Object.ReferenceEquals(root1, root2) Then
-                    Return (Me._childFirst * distance1.CompareTo(distance2))
-                Else
-                    Global.System.Diagnostics.Debug.Assert(((Not (root1.Table) Is Nothing)  _
-                                    AndAlso (Not (root2.Table) Is Nothing)))
-                    If (root1.Table.Rows.IndexOf(root1) < root2.Table.Rows.IndexOf(root2)) Then
-                        Return -1
-                    Else
-                        Return 1
-                    End If
-                End If
-            End Function
-        End Class
-    End Class
-End Namespace
