@@ -14,23 +14,8 @@ Public Class frmLogin
     Private positionName As String = String.Empty
 
     Private isAdmin As Boolean = False
-    Private isDebug As Boolean = SickLeaveScreening.My.Settings.IsDebug
 
     Private Sub Login_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        If isDebug = True Then
-            'doc omman
-            'txtEmployeeId.Text = "FMB-0451"
-            'txtPassword.Text = "1001"
-
-            'mam irene
-            txtEmployeeId.Text = "1805-003"
-            txtPassword.Text = "torejas"
-
-            'sysadmin
-            'txtEmployeeId.Text = "0000"
-            'txtPassword.Text = "admin123$$"
-        End If
-
         If ApplicationDeployment.IsNetworkDeployed Then
             lblVersion.Text = "ver. " & ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString
         Else
