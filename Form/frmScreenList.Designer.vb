@@ -24,12 +24,12 @@ Partial Class frmScreenList
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmScreenList))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle25 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle26 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle27 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle28 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle29 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle30 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pnlTop = New System.Windows.Forms.Panel()
         Me.bindingNavigator = New System.Windows.Forms.BindingNavigator(Me.components)
         Me.txtTotalPageNumber = New System.Windows.Forms.ToolStripLabel()
@@ -115,7 +115,7 @@ Partial Class frmScreenList
         Me.bindingNavigator.Dock = System.Windows.Forms.DockStyle.None
         Me.bindingNavigator.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
         Me.bindingNavigator.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BindingNavigatorMoveFirstItem, Me.BindingNavigatorSeparator, Me.BindingNavigatorMovePreviousItem, Me.txtPageNumber, Me.txtTotalPageNumber, Me.BindingNavigatorSeparator1, Me.BindingNavigatorMoveNextItem, Me.BindingNavigatorMoveLastItem, Me.tssGo, Me.btnGo})
-        Me.bindingNavigator.Location = New System.Drawing.Point(1092, 4)
+        Me.bindingNavigator.Location = New System.Drawing.Point(1061, 4)
         Me.bindingNavigator.MoveFirstItem = Me.BindingNavigatorMoveFirstItem
         Me.bindingNavigator.MoveLastItem = Me.BindingNavigatorMoveLastItem
         Me.bindingNavigator.MoveNextItem = Me.BindingNavigatorMoveNextItem
@@ -123,7 +123,7 @@ Partial Class frmScreenList
         Me.bindingNavigator.Name = "bindingNavigator"
         Me.bindingNavigator.PositionItem = Me.txtPageNumber
         Me.bindingNavigator.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.bindingNavigator.Size = New System.Drawing.Size(201, 25)
+        Me.bindingNavigator.Size = New System.Drawing.Size(232, 25)
         Me.bindingNavigator.TabIndex = 10
         Me.bindingNavigator.Text = "PagerPanel"
         '
@@ -161,6 +161,7 @@ Partial Class frmScreenList
         '
         Me.txtPageNumber.AccessibleName = "Position"
         Me.txtPageNumber.AutoSize = False
+        Me.txtPageNumber.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.txtPageNumber.Name = "txtPageNumber"
         Me.txtPageNumber.Size = New System.Drawing.Size(30, 23)
         Me.txtPageNumber.Text = "0"
@@ -460,13 +461,13 @@ Partial Class frmScreenList
         Me.dgvList.AllowUserToResizeRows = False
         Me.dgvList.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.dgvList.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Verdana", 8.5!)
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        Me.dgvList.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle25.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle25.Font = New System.Drawing.Font("Verdana", 8.5!)
+        DataGridViewCellStyle25.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle25.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle25.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        Me.dgvList.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle25
         Me.dgvList.ColumnHeadersHeight = 25
         Me.dgvList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         Me.dgvList.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ColScreenId, Me.ColScreenDate, Me.ColEmployeeName, Me.ColReason, Me.ColDiagnosis, Me.ColLeaveTypeId, Me.ColAbsentFrom, Me.ColAbsentTo, Me.ColQuantity, Me.ColLeaveTypeName, Me.ColsFitToWork})
@@ -518,8 +519,8 @@ Partial Class frmScreenList
         'ColDiagnosis
         '
         Me.ColDiagnosis.DataPropertyName = "Diagnosis"
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        Me.ColDiagnosis.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        Me.ColDiagnosis.DefaultCellStyle = DataGridViewCellStyle26
         Me.ColDiagnosis.HeaderText = "Diagnosis"
         Me.ColDiagnosis.Name = "ColDiagnosis"
         Me.ColDiagnosis.ReadOnly = True
@@ -536,10 +537,10 @@ Partial Class frmScreenList
         'ColAbsentFrom
         '
         Me.ColAbsentFrom.DataPropertyName = "AbsentFrom"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.Format = "MM/dd/yyyy"
-        DataGridViewCellStyle3.NullValue = Nothing
-        Me.ColAbsentFrom.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle27.Format = "MM/dd/yyyy"
+        DataGridViewCellStyle27.NullValue = Nothing
+        Me.ColAbsentFrom.DefaultCellStyle = DataGridViewCellStyle27
         Me.ColAbsentFrom.HeaderText = "From"
         Me.ColAbsentFrom.Name = "ColAbsentFrom"
         Me.ColAbsentFrom.ReadOnly = True
@@ -548,9 +549,9 @@ Partial Class frmScreenList
         'ColAbsentTo
         '
         Me.ColAbsentTo.DataPropertyName = "AbsentTo"
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle4.Format = "MM/dd/yyyy"
-        Me.ColAbsentTo.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle28.Format = "MM/dd/yyyy"
+        Me.ColAbsentTo.DefaultCellStyle = DataGridViewCellStyle28
         Me.ColAbsentTo.HeaderText = "To"
         Me.ColAbsentTo.Name = "ColAbsentTo"
         Me.ColAbsentTo.ReadOnly = True
@@ -559,8 +560,8 @@ Partial Class frmScreenList
         'ColQuantity
         '
         Me.ColQuantity.DataPropertyName = "Quantity"
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.ColQuantity.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.ColQuantity.DefaultCellStyle = DataGridViewCellStyle29
         Me.ColQuantity.HeaderText = "QTY"
         Me.ColQuantity.Name = "ColQuantity"
         Me.ColQuantity.ReadOnly = True
@@ -569,8 +570,8 @@ Partial Class frmScreenList
         'ColLeaveTypeName
         '
         Me.ColLeaveTypeName.DataPropertyName = "LeaveTypeCode"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.ColLeaveTypeName.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.ColLeaveTypeName.DefaultCellStyle = DataGridViewCellStyle30
         Me.ColLeaveTypeName.HeaderText = "Type"
         Me.ColLeaveTypeName.Name = "ColLeaveTypeName"
         Me.ColLeaveTypeName.ReadOnly = True

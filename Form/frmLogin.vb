@@ -73,7 +73,6 @@ Public Class frmLogin
                 Using reader As IDataReader = dbScreening.ExecuteReader("RdEmployee", CommandType.StoredProcedure, prmLogin2)
                     GetUserInformation(reader)
                 End Using
-
             Else 'non-nbc doctors
                 Dim count2 As Integer = 0
                 Dim prmLogin3(1) As SqlParameter
@@ -95,7 +94,6 @@ Public Class frmLogin
                     Using reader As IDataReader = dbScreening.ExecuteReader("RdClinic", CommandType.StoredProcedure, prmLogin4)
                         GetUserInformation(reader)
                     End Using
-
                 Else 'unauthorized login - incorrect credentials or inactive user
                     MessageBox.Show("Incorrect employeee ID or password.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     txtEmployeeId.Focus()
